@@ -1,12 +1,12 @@
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import HomeScreen from "./src/screens/HomeScreen";
-import TestScreen from "./src/screens/TestScreen";
+import BubbleSortScreen from "./src/screens/BubbleSortScreen";
 
 const navigator = createStackNavigator(
 	{
 		Home: HomeScreen,
-		Test: TestScreen,
+		BubbleSort: BubbleSortScreen,
 	},
 	{
 		initialRouteName: "Home",

@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-import {
-	Text,
-	StyleSheet,
-	View,
-	Button,
-	TouchableOpacity,
-	FlatList,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const NumBar = ({ navigation }) => {
-	const [bars, setBars] = useState([]);
+const NumBar = ({ state }) => {
+	const bars = state.bars;
+	const setBars = state.setBars;
+	var c = 0;
 
 	return (
 		<View style={styles.frame}>
@@ -42,7 +37,7 @@ const NumBar = ({ navigation }) => {
 			<View style={styles.buttonView}>
 				<TouchableOpacity
 					onPress={() => {
-						setBars(bars.slice(0, -1));
+						if (bars.length > 3) setBars(bars.slice(0, -1));
 					}}
 				>
 					<AntDesign name="minussquare" size={50} color="black" />

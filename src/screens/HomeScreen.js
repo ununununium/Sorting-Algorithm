@@ -13,9 +13,10 @@ import Cell from "../components/Cell";
 const HomeScreen = ({ navigation }) => {
 	return (
 		<ScrollView>
-			<Cell title="Go Test" callBack={() => navigation.navigate("Test")} />
-			<Cell title="Go Test" callBack={() => navigation.navigate("Test")} />
-			<Cell title="Go Test" callBack={() => navigation.navigate("Test")} />
+			<Cell
+				title="Bubble Sort"
+				callBack={() => navigation.navigate("BubbleSort")}
+			/>
 		</ScrollView>
 	);
 };
