@@ -1,35 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
+import {
+	StyleSheet,
+	View,
+	TouchableOpacity,
+	FlatList,
+	Animated,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 const NumBar = ({ state }) => {
 	const bars = state.bars;
 	const setBars = state.setBars;
-	var c = 0;
+
+	// const w = useRef(new Animated.View(0)).current;
+	const w = useState(new Animated.Value((windowWidth - 40) / bars.length))[0];
+
+	function changew(barNum) {
+		Animated.timing(w, {
+			toValue: (windowWidth - 40) / barNum,
+			duration: 300,
+			useNativeDriver: false,
+		}).start();
+	}
 
 	return (
 		<View style={styles.frame}>
 			<View style={styles.bars}>
 				<FlatList
 					horizontal
+					keyExtractor={(item, i) => "" + i}
 					data={bars}
 					renderItem={({ item }) => {
 						return (
-							<View
+							<Animated.View
 								style={{
-									borderRadius: 10,
+									borderRadius: 100,
 									borderWidth: 1,
 									borderColor: "white",
-									width: (windowWidth - 40) / bars.length,
+									width: w, //(windowWidth - 40) / bars.length,
 									height: item,
 									backgroundColor: "black",
 									flexDirection: "column",
 									alignSelf: "flex-end",
 								}}
-							></View>
+							></Animated.View>
 						);
 					}}
 				/>
@@ -37,7 +54,11 @@ const NumBar = ({ state }) => {
 			<View style={styles.buttonView}>
 				<TouchableOpacity
 					onPress={() => {
-						if (bars.length > 3) setBars(bars.slice(0, -1));
+						if (bars.length > 3) {
+							let barNum = bars.length;
+							setBars(bars.slice(0, -1));
+							changew(barNum - 1);
+						}
 					}}
 				>
 					<AntDesign name="minussquare" size={50} color="black" />
@@ -45,7 +66,9 @@ const NumBar = ({ state }) => {
 				<View style={{ width: 100 }} />
 				<TouchableOpacity
 					onPress={() => {
+						let barNum = bars.length;
 						setBars([...bars, Math.floor(Math.random() * 90 + 10)]);
+						changew(barNum + 1);
 					}}
 				>
 					<AntDesign name="plussquare" size={50} color="black" />
@@ -57,7 +80,7 @@ const NumBar = ({ state }) => {
 
 const styles = StyleSheet.create({
 	bars: {
-		alignItems: "center",
+		alignItems: "flex-start",
 		height: 110,
 	},
 	frame: {
