@@ -17,6 +17,22 @@ const HomeScreen = ({ navigation }) => {
 				title="Bubble Sort"
 				callBack={() => navigation.navigate("BubbleSort")}
 			/>
+			<Cell
+				title="Bubble Sort"
+				callBack={() => navigation.navigate("BubbleSort")}
+			/>
+			<Cell
+				title="Bubble Sort"
+				callBack={() => navigation.navigate("BubbleSort")}
+			/>
+			<Cell
+				title="Bubble Sort"
+				callBack={() => navigation.navigate("BubbleSort")}
+			/>
+			<Cell
+				title="Bubble Sort"
+				callBack={() => navigation.navigate("BubbleSort")}
+			/>
 		</ScrollView>
 	);
 };

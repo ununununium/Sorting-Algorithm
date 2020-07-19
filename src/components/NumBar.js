@@ -12,14 +12,13 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 const NumBar = ({ state }) => {
-	const bars = state.bars;
-	const setBars = state.setBars;
+	const { bars, setBars } = state;
+	const animWidth = useState(
+		new Animated.Value((windowWidth - 40) / bars.length)
+	)[0];
 
-	// const w = useRef(new Animated.View(0)).current;
-	const w = useState(new Animated.Value((windowWidth - 40) / bars.length))[0];
-
-	function changew(barNum) {
-		Animated.timing(w, {
+	function changeBarWidth(barNum) {
+		Animated.timing(animWidth, {
 			toValue: (windowWidth - 40) / barNum,
 			duration: 300,
 			useNativeDriver: false,
@@ -30,19 +29,22 @@ const NumBar = ({ state }) => {
 		<View style={styles.frame}>
 			<View style={styles.bars}>
 				<FlatList
+					showsHorizontalScrollIndicator={false}
 					horizontal
 					keyExtractor={(item, i) => "" + i}
 					data={bars}
 					renderItem={({ item }) => {
+						const { val, color } = item;
+
 						return (
 							<Animated.View
 								style={{
 									borderRadius: 100,
-									borderWidth: 1,
+									borderWidth: 2,
 									borderColor: "white",
-									width: w, //(windowWidth - 40) / bars.length,
-									height: item,
-									backgroundColor: "black",
+									width: animWidth,
+									height: parseInt(val),
+									backgroundColor: color,
 									flexDirection: "column",
 									alignSelf: "flex-end",
 								}}
@@ -57,7 +59,7 @@ const NumBar = ({ state }) => {
 						if (bars.length > 3) {
 							let barNum = bars.length;
 							setBars(bars.slice(0, -1));
-							changew(barNum - 1);
+							changeBarWidth(barNum - 1);
 						}
 					}}
 				>
@@ -67,8 +69,11 @@ const NumBar = ({ state }) => {
 				<TouchableOpacity
 					onPress={() => {
 						let barNum = bars.length;
-						setBars([...bars, Math.floor(Math.random() * 90 + 10)]);
-						changew(barNum + 1);
+						setBars([
+							...bars,
+							{ val: Math.floor(Math.random() * 90 + 10), color: "black" },
+						]);
+						changeBarWidth(barNum + 1);
 					}}
 				>
 					<AntDesign name="plussquare" size={50} color="black" />
