@@ -9,40 +9,13 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { bubbleSort } from "../Algorithms/SortAlgos";
 
 const WIDTH = Dimensions.get("window").width;
 const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
+let SLEEP_SEC = 200; //recommend 150-300
 
-//........................Sort........................
-
-async function bubbleSort(swap, A, visit, unvisit) {
-	const sleep = (milliseconds) => {
-		return new Promise((resolve) => setTimeout(resolve, milliseconds));
-	};
-
-	let n = A.length;
-
-	for (var i = 0; i < n - 1; i++) {
-		for (var j = 0; j < n - i - 1; j++) {
-			let v1 = A[j].val;
-			let v2 = A[j + 1].val;
-			if (parseInt(v1._value) > parseInt(v2._value)) {
-				visit(j);
-				visit(j + 1);
-				await sleep(300);
-				swap(j, j + 1);
-				await sleep(300);
-				unvisit(j);
-				unvisit(j + 1);
-				await sleep(300);
-			}
-		}
-	}
-}
-
-//.....................................................
-
-const DynamicBar = () => {
+const DynamicBar = ({ sortAlgo }) => {
 	//........................ Bar Width Animation ........................
 	const animWidth = useState(
 		new Animated.Value((WIDTH - 40) / DEFAULT_BARS.length)
@@ -51,7 +24,7 @@ const DynamicBar = () => {
 	function changeBarWidth(barNum) {
 		Animated.timing(animWidth, {
 			toValue: (WIDTH - 40) / barNum,
-			duration: 300,
+			duration: SLEEP_SEC,
 			useNativeDriver: false,
 		}).start();
 	}
@@ -81,13 +54,13 @@ const DynamicBar = () => {
 
 		Animated.timing(getAnimVal[a].val, {
 			toValue: b_val,
-			duration: 300,
+			duration: SLEEP_SEC - 50,
 			useNativeDriver: false,
 		}).start();
 
 		Animated.timing(getAnimVal[b].val, {
 			toValue: a_val,
-			duration: 300,
+			duration: SLEEP_SEC - 50,
 			useNativeDriver: false,
 		}).start();
 	}
@@ -96,7 +69,7 @@ const DynamicBar = () => {
 	function visit(idx) {
 		Animated.timing(getAnimVal[idx].colorRaw, {
 			toValue: 1,
-			duration: 200,
+			duration: SLEEP_SEC - 50,
 			useNativeDriver: false,
 		}).start();
 	}
@@ -104,9 +77,17 @@ const DynamicBar = () => {
 	function unvisit(idx) {
 		Animated.timing(getAnimVal[idx].colorRaw, {
 			toValue: 0,
-			duration: 200,
+			duration: SLEEP_SEC - 50,
 			useNativeDriver: false,
 		}).start();
+	}
+	//........................ Sort ........................
+
+	function sort() {
+		switch (sortAlgo) {
+			case "bubbleSort":
+				bubbleSort(animSwap, getAnimVal, visit, unvisit, SLEEP_SEC);
+		}
 	}
 
 	//........................ Dynamic Bar Render ........................
@@ -151,7 +132,14 @@ const DynamicBar = () => {
 					onPress={() => {
 						let barNum = getAnimVal.length;
 						let newVal = Math.floor(Math.random() * 70 + 30);
-						SetAnimVal([...getAnimVal, { val: new Animated.Value(newVal) }]);
+						let val = new Animated.Value(newVal);
+						let colorRaw = new Animated.Value(0);
+						let colorInterpolation = colorRaw.interpolate({
+							inputRange: [0, 1],
+							outputRange: ["rgb(0,0,0)", "rgb(0,255,0)"],
+						});
+						let newEle = { val, colorRaw, colorInterpolation };
+						SetAnimVal([...getAnimVal, newEle]);
 						changeBarWidth(barNum + 1);
 					}}
 				>
@@ -159,12 +147,7 @@ const DynamicBar = () => {
 				</TouchableOpacity>
 			</View>
 
-			<Button
-				title="Sort It !!!"
-				onPress={() => {
-					bubbleSort(animSwap, getAnimVal, visit, unvisit);
-				}}
-			/>
+			<Button title="Sort It !!!" onPress={() => sort()} />
 		</View>
 	);
 };
