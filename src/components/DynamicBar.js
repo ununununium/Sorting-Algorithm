@@ -5,11 +5,10 @@ import {
 	Button,
 	Animated,
 	FlatList,
-	Text,
 	Dimensions,
 	TouchableOpacity,
 } from "react-native";
-import DynamicBar from "../components/DynamicBar";
+import { AntDesign } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -19,7 +18,7 @@ const DEFAULT_BARS = [
 	{ val: "96", color: "black" },
 ];
 
-const TestScreen = () => {
+const DynamicBar = () => {
 	const [bars, setBars] = useState(DEFAULT_BARS);
 
 	const animWidth = useState(
@@ -59,8 +58,59 @@ const TestScreen = () => {
 	}
 
 	return (
-		<View>
-			<DynamicBar />
+		<View style={styles.frame}>
+			<View style={styles.barCollection}>
+				<FlatList
+					showsHorizontalScrollIndicator={false}
+					horizontal
+					keyExtractor={(item, i) => "" + i}
+					data={getAnimVal}
+					renderItem={({ item }) => {
+						console.log(item);
+						return (
+							<Animated.View
+								style={{
+									...styles.bar,
+									height: item,
+									width: animWidth,
+								}}
+							></Animated.View>
+						);
+					}}
+				/>
+			</View>
+
+			<View style={styles.buttonView}>
+				<TouchableOpacity
+					onPress={() => {
+						if (getAnimVal.length > 3) {
+							let barNum = getAnimVal.length;
+							SetAnimVal(getAnimVal.slice(0, -1));
+							changeBarWidth(barNum - 1);
+						}
+					}}
+				>
+					<AntDesign name="minussquare" size={50} color="black" />
+				</TouchableOpacity>
+				<View style={{ width: 100 }} />
+				<TouchableOpacity
+					onPress={() => {
+						let barNum = getAnimVal.length;
+						let newVal = Math.floor(Math.random() * 70 + 30);
+						SetAnimVal([...getAnimVal, new Animated.Value(newVal)]);
+						changeBarWidth(barNum + 1);
+					}}
+				>
+					<AntDesign name="plussquare" size={50} color="black" />
+				</TouchableOpacity>
+			</View>
+
+			<Button
+				title="Swap"
+				onPress={() => {
+					animSwap(0, 1);
+				}}
+			/>
 		</View>
 	);
 };
@@ -99,4 +149,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default TestScreen;
+export default DynamicBar;
