@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 import {
 	StyleSheet,
 	View,
 	TouchableOpacity,
 	FlatList,
 	Animated,
+	Text,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -27,7 +27,7 @@ const NumBar = ({ state }) => {
 
 	return (
 		<View style={styles.frame}>
-			<View style={styles.bars}>
+			<View style={styles.barCollection}>
 				<FlatList
 					showsHorizontalScrollIndicator={false}
 					horizontal
@@ -39,16 +39,14 @@ const NumBar = ({ state }) => {
 						return (
 							<Animated.View
 								style={{
-									borderRadius: 100,
-									borderWidth: 2,
-									borderColor: "white",
+									...styles.bar,
 									width: animWidth,
 									height: parseInt(val),
 									backgroundColor: color,
-									flexDirection: "column",
-									alignSelf: "flex-end",
 								}}
-							></Animated.View>
+							>
+								<Text style={styles.barText}>{parseInt(val)}</Text>
+							</Animated.View>
 						);
 					}}
 				/>
@@ -71,7 +69,7 @@ const NumBar = ({ state }) => {
 						let barNum = bars.length;
 						setBars([
 							...bars,
-							{ val: Math.floor(Math.random() * 90 + 10), color: "black" },
+							{ val: Math.floor(Math.random() * 70 + 30), color: "black" },
 						]);
 						changeBarWidth(barNum + 1);
 					}}
@@ -84,12 +82,27 @@ const NumBar = ({ state }) => {
 };
 
 const styles = StyleSheet.create({
-	bars: {
+	frame: {
+		padding: 20,
+	},
+	barCollection: {
 		alignItems: "flex-start",
 		height: 110,
 	},
-	frame: {
-		padding: 20,
+	bar: {
+		borderRadius: 50,
+		borderWidth: 2,
+		borderColor: "white",
+		flexDirection: "column",
+		alignSelf: "flex-end",
+		alignItems: "center",
+		justifyContent: "flex-end",
+		paddingBottom: 5,
+	},
+	barText: {
+		fontSize: 14,
+		color: "white",
+		fontWeight: "bold",
 	},
 	buttonView: {
 		padding: 20,

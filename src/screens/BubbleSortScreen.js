@@ -2,29 +2,6 @@ import React, { useState } from "react";
 import NumBar from "../components/NumBar";
 import { StyleSheet, View, Button, Animated } from "react-native";
 
-// const DEFAULT_BARS = [
-// 	48,
-// 	67,
-// 	78,
-// 	38,
-// 	98,
-// 	29,
-// 	49,
-// 	80,
-// 	63,
-// 	90,
-// 	24,
-// 	65,
-// 	77,
-// 	92,
-// 	24,
-// 	30,
-// 	85,
-// 	26,
-// 	51,
-// 	33,
-// ];
-
 const DEFAULT_BARS = [
 	{ val: "46", color: "black" },
 	{ val: "36", color: "black" },
