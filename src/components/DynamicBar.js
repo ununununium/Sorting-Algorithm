@@ -10,24 +10,36 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const windowWidth = Dimensions.get("window").width;
+const WIDTH = Dimensions.get("window").width;
+const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
 
-const DEFAULT_BARS = [
-	{ val: "76", color: "black" },
-	{ val: "36", color: "black" },
-	{ val: "96", color: "black" },
-];
+//........................Sort........................
+
+const sleep = (milliseconds) => {
+	return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+async function bubbleSort(swap, A) {
+	var n = A.length;
+
+	for (var i = 0; i < n - 1; i++) {
+		for (var j = 0; j < n - i - 1; j++) {
+			if (parseInt(A[j]._value) > parseInt(A[j + 1]._value)) {
+				swap(j, j + 1);
+				await sleep(300);
+			}
+		}
+	}
+}
+//........................Sort........................
 
 const DynamicBar = () => {
-	const [bars, setBars] = useState(DEFAULT_BARS);
-
 	const animWidth = useState(
-		new Animated.Value((windowWidth - 40) / bars.length)
+		new Animated.Value((WIDTH - 40) / DEFAULT_BARS.length)
 	)[0];
 
 	function changeBarWidth(barNum) {
 		Animated.timing(animWidth, {
-			toValue: (windowWidth - 40) / barNum,
+			toValue: (WIDTH - 40) / barNum,
 			duration: 300,
 			useNativeDriver: false,
 		}).start();
@@ -35,7 +47,7 @@ const DynamicBar = () => {
 
 	const animVals = [];
 	for (var i = 0; i < DEFAULT_BARS.length; i++) {
-		animVals[i] = useState(new Animated.Value(parseInt(bars[i].val)))[0];
+		animVals[i] = useState(new Animated.Value(DEFAULT_BARS[i]))[0];
 	}
 
 	const [getAnimVal, SetAnimVal] = useState(animVals);
@@ -106,9 +118,9 @@ const DynamicBar = () => {
 			</View>
 
 			<Button
-				title="Swap"
+				title="Sort It !!!"
 				onPress={() => {
-					animSwap(0, 1);
+					bubbleSort(animSwap, getAnimVal);
 				}}
 			/>
 		</View>
