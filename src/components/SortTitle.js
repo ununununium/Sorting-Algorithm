@@ -6,7 +6,6 @@ const SortTitle = ({ callBack, title }) => {
   const handleSpeedBtn = (index) => {
     let ary = [false, false, false];
     ary[index] = ary[index] == true ? false : true;
-    console.log("i jus press btn" + index);
     setFlag(ary);
     console.log(ary);
   };
@@ -18,39 +17,25 @@ const SortTitle = ({ callBack, title }) => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[
-            styles.buttonView,
-            styles.buttonLeftRadius,
-            flag[0] ? { backgroundColor: "#edab75" } : {},
-          ]}
+          style={styles.buttonView}
           onPress={() => handleSpeedBtn(0)}>
-          <Text
-            style={[styles.buttonText, flag[0] ? { color: "#ffffff" } : {}]}>
-            Slow
-          </Text>
+          <View style={[flag[0] ? styles.buttonTextLayer : {}]}>
+            <Text style={styles.buttonText}>Slow</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.buttonView,
-            flag[1] ? { backgroundColor: "#edab75" } : {},
-          ]}
+          style={styles.buttonView}
           onPress={() => handleSpeedBtn(1)}>
-          <Text
-            style={[styles.buttonText, flag[1] ? { color: "#ffffff" } : {}]}>
-            Normal
-          </Text>
+          <View style={[flag[1] ? styles.buttonTextLayer : {}]}>
+            <Text style={styles.buttonText}>Normal</Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            styles.buttonView,
-            styles.buttonRightRadius,
-            flag[2] ? { backgroundColor: "#edab75" } : {},
-          ]}
+          style={styles.buttonView}
           onPress={() => handleSpeedBtn(2)}>
-          <Text
-            style={[styles.buttonText, flag[2] ? { color: "#ffffff" } : {}]}>
-            Fast
-          </Text>
+          <View style={[flag[2] ? styles.buttonTextLayer : {}]}>
+            <Text style={styles.buttonText}>Fast</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -74,25 +59,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 5,
     paddingHorizontal: 17,
+    backgroundColor: "#f6f9ff",
+    borderRadius: 40,
+    paddingVertical: 8,
   },
   buttonView: {
-    borderWidth: 1,
-    borderColor: "#edab75",
     flex: 3.3,
   },
   buttonText: {
     textAlign: "center",
-    paddingVertical: 5,
-    color: "#edab75",
+    padding: 10,
+    color: "#53588b",
     fontWeight: "bold",
   },
-  buttonLeftRadius: {
-    borderTopLeftRadius: 50,
-    borderBottomLeftRadius: 50,
-  },
-  buttonRightRadius: {
-    borderTopRightRadius: 50,
-    borderBottomRightRadius: 50,
+  buttonTextLayer: {
+    width: 100,
+    backgroundColor: "#e5eeff",
+    borderRadius: 50,
   },
 });
 

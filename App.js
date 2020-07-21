@@ -15,25 +15,25 @@ import { Button, Text } from "react-native";
 import React from "react";
 
 const navigator = createStackNavigator(
-	{
-		Home: HomeScreen,
-		BubbleSort: BubbleSortScreen,
-		Test: TestScreen,
-		InsertionSort: InsertionSortScreen,
-		QuickSort: QuickSortScreen,
-		HeapSort: HeapSortScreen,
-		SelectionSort: SelectionSortScreen,
-		ShellSort: ShellSortScreen,
-		SlowSort: SlowSortScreen,
-		CocktailShakerSort: CocktailShakerSortScreen,
-		DynamicHome: DynamicHomeScreen,
-	},
-	{
-		initialRouteName: "Home",
-		defaultNavigationOptions: {
-			title: "Algorithms",
-		},
-	}
+  {
+    Home: HomeScreen,
+    BubbleSort: BubbleSortScreen,
+    Test: TestScreen,
+    InsertionSort: InsertionSortScreen,
+    QuickSort: QuickSortScreen,
+    HeapSort: HeapSortScreen,
+    SelectionSort: SelectionSortScreen,
+    ShellSort: ShellSortScreen,
+    SlowSort: SlowSortScreen,
+    CocktailShakerSort: CocktailShakerSortScreen,
+    DynamicHome: DynamicHomeScreen,
+  },
+  {
+    initialRouteName: "Home",
+    defaultNavigationOptions: {
+      title: "Algorithms",
+    },
+  }
 );
 
 export default createAppContainer(navigator);
