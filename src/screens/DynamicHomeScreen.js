@@ -50,7 +50,7 @@ const DynamicHomeScreen = ({ navigation }) => {
 				<View style={styles.hbox}>
 					<DynamicCell
 						passdown={{ setter: setButt3 }}
-						sortAlgo="Bubble Sort"
+						sortAlgo="Quick Sort"
 						callBack={() => navigation.navigate("QuickSort")}
 					/>
 					<DynamicCell

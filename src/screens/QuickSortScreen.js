@@ -5,7 +5,7 @@ import DynamicBar from "../components/DynamicBar";
 const QuickSortScreen = () => {
 	return (
 		<View>
-			<DynamicBar sortAlgo="Bubble Sort" />
+			<DynamicBar sortAlgo="Quick Sort" />
 		</View>
 	);
 };
