@@ -15,7 +15,7 @@ const WIDTH = Dimensions.get("window").width;
 const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
 const SLEEP_SEC = 350; //recommend 150-300
 
-const BORDER_COLOR_RANGE = ["rgb(255,255,255)", "rgb(0,255,255)"];
+const BORDER_COLOR_RANGE = ["rgb(242,242,242)", "rgb(0,255,255)"];
 const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
 
 const DynamicBar = ({ sortAlgo }) => {
