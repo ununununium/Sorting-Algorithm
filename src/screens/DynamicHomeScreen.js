@@ -10,7 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Cell from "../components/Cell";
 
-const HomeScreen = ({ navigation }) => {
+const DynamicHomeScreen = ({ navigation }) => {
 	return (
 		<View>
 			<ScrollView>
@@ -71,7 +71,7 @@ const HomeScreen = ({ navigation }) => {
 					/>
 					<Cell
 						title="Dynamic Home"
-						callBack={() => navigation.navigate("DynamicHome")}
+						callBack={() => navigation.navigate("Dynamic Home")}
 						color="#1b4765"
 					/>
 				</View>
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default HomeScreen;
+export default DynamicHomeScreen;

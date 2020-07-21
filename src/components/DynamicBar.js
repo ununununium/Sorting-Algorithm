@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	View,
@@ -15,10 +15,20 @@ const WIDTH = Dimensions.get("window").width;
 const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
 const SLEEP_SEC = 350; //recommend 150-300
 
-const BORDER_COLOR_RANGE = ["rgb(242,242,242)", "rgb(0,255,255)"];
+const BORDER_COLOR_RANGE = ["rgb(242,242,242)", "rgb(227,168,255)"];
 const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
 
-const DynamicBar = ({ sortAlgo }) => {
+const cfc = () => {
+	console.log("233");
+};
+
+const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
+	if (passdown) {
+		useEffect(() => {
+			passdown.setter({ sort, addBar, removeBar });
+		}, []);
+	}
+
 	//........................ Bar Width Animation ........................
 	const animWidth = useState(
 		new Animated.Value((WIDTH - 40) / DEFAULT_BARS.length)
@@ -91,12 +101,46 @@ const DynamicBar = ({ sortAlgo }) => {
 			useNativeDriver: false,
 		}).start();
 	}
-	//........................ Sort ........................
+	//........................ helper functions ........................
 
 	function sort() {
 		switch (sortAlgo) {
 			case "bubbleSort":
 				bubbleSort(animSwap, getAnimVal, visit, unvisit, SLEEP_SEC);
+		}
+	}
+
+	function addBar() {
+		let barNum = getAnimVal.length;
+		let newVal = Math.floor(Math.random() * 70 + 30);
+		let val = new Animated.Value(newVal);
+
+		let colorInterp = val.interpolate({
+			inputRange: [30, 100],
+			outputRange: BAR_COLOR_RANGE,
+		});
+
+		let borderColorRaw = new Animated.Value(0);
+		let borderColorInterp = borderColorRaw.interpolate({
+			inputRange: [0, 1],
+			outputRange: BORDER_COLOR_RANGE,
+		});
+
+		let newEle = {
+			val,
+			colorInterp,
+			borderColorRaw,
+			borderColorInterp,
+		};
+		SetAnimVal([...getAnimVal, newEle]);
+		changeBarWidth(barNum + 1);
+	}
+
+	function removeBar() {
+		if (getAnimVal.length > 3) {
+			let barNum = getAnimVal.length;
+			SetAnimVal(getAnimVal.slice(0, -1));
+			changeBarWidth(barNum - 1);
 		}
 	}
 
@@ -110,7 +154,6 @@ const DynamicBar = ({ sortAlgo }) => {
 					keyExtractor={(item, i) => "" + i}
 					data={getAnimVal}
 					renderItem={({ item }) => {
-						console.log(item);
 						return (
 							<Animated.View
 								style={{
@@ -126,51 +169,22 @@ const DynamicBar = ({ sortAlgo }) => {
 				/>
 			</View>
 
-			<View style={styles.buttonView}>
-				<TouchableOpacity
-					onPress={() => {
-						if (getAnimVal.length > 3) {
-							let barNum = getAnimVal.length;
-							SetAnimVal(getAnimVal.slice(0, -1));
-							changeBarWidth(barNum - 1);
-						}
-					}}
-				>
-					<AntDesign name="minussquare" size={50} color="black" />
-				</TouchableOpacity>
-				<View style={{ width: 100 }} />
-				<TouchableOpacity
-					onPress={() => {
-						let barNum = getAnimVal.length;
-						let newVal = Math.floor(Math.random() * 70 + 30);
-						let val = new Animated.Value(newVal);
-
-						let colorInterp = val.interpolate({
-							inputRange: [30, 100],
-							outputRange: BAR_COLOR_RANGE,
-						});
-
-						let borderColorRaw = new Animated.Value(0);
-						let borderColorInterp = borderColorRaw.interpolate({
-							inputRange: [0, 1],
-							outputRange: BORDER_COLOR_RANGE,
-						});
-
-						let newEle = {
-							val,
-							colorInterp,
-							borderColorRaw,
-							borderColorInterp,
-						};
-						SetAnimVal([...getAnimVal, newEle]);
-						changeBarWidth(barNum + 1);
-					}}
-				>
-					<AntDesign name="plussquare" size={50} color="black" />
-				</TouchableOpacity>
-			</View>
-
-			<Button title="Sort It !!!" onPress={() => sort()} />
+			{hideButton ? (
+				<View />
+			) : (
+				<View>
+					<View style={styles.buttonView}>
+						<TouchableOpacity onPress={() => removeBar()}>
+							<AntDesign name="minussquare" size={50} color="black" />
+						</TouchableOpacity>
+						<View style={{ width: 100 }} />
+						<TouchableOpacity onPress={() => addBar()}>
+							<AntDesign name="plussquare" size={50} color="black" />
+						</TouchableOpacity>
+					</View>
+					<Button title="Sort It !!!" onPress={() => sort()} />
+				</View>
+			)}
 		</View>
 	);
 };
