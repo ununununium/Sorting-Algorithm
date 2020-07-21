@@ -13,7 +13,10 @@ import { bubbleSort } from "../Algorithms/SortAlgos";
 
 const WIDTH = Dimensions.get("window").width;
 const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
-let SLEEP_SEC = 200; //recommend 150-300
+const SLEEP_SEC = 350; //recommend 150-300
+
+const BORDER_COLOR_RANGE = ["rgb(255,255,255)", "rgb(0,255,255)"];
+const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
 
 const DynamicBar = ({ sortAlgo }) => {
 	//........................ Bar Width Animation ........................
@@ -38,10 +41,17 @@ const DynamicBar = ({ sortAlgo }) => {
 	}
 
 	for (var i = 0; i < DEFAULT_BARS.length; i++) {
-		animVals[i].colorRaw = useState(new Animated.Value(0))[0];
-		animVals[i].colorInterpolation = animVals[i].colorRaw.interpolate({
+		animVals[i].colorInterp = animVals[i].val.interpolate({
+			inputRange: [30, 100],
+			outputRange: BAR_COLOR_RANGE,
+		});
+	}
+
+	for (var i = 0; i < DEFAULT_BARS.length; i++) {
+		animVals[i].borderColorRaw = useState(new Animated.Value(0))[0];
+		animVals[i].borderColorInterp = animVals[i].borderColorRaw.interpolate({
 			inputRange: [0, 1],
-			outputRange: ["rgb(0,0,0)", "rgb(0,255,0)"],
+			outputRange: BORDER_COLOR_RANGE,
 		});
 	}
 
@@ -67,7 +77,7 @@ const DynamicBar = ({ sortAlgo }) => {
 	//........................ Bar Visit Animation ........................
 
 	function visit(idx) {
-		Animated.timing(getAnimVal[idx].colorRaw, {
+		Animated.timing(getAnimVal[idx].borderColorRaw, {
 			toValue: 1,
 			duration: SLEEP_SEC - 50,
 			useNativeDriver: false,
@@ -75,7 +85,7 @@ const DynamicBar = ({ sortAlgo }) => {
 	}
 
 	function unvisit(idx) {
-		Animated.timing(getAnimVal[idx].colorRaw, {
+		Animated.timing(getAnimVal[idx].borderColorRaw, {
 			toValue: 0,
 			duration: SLEEP_SEC - 50,
 			useNativeDriver: false,
@@ -107,7 +117,8 @@ const DynamicBar = ({ sortAlgo }) => {
 									...styles.bar,
 									height: item.val,
 									width: animWidth,
-									backgroundColor: item.colorInterpolation,
+									backgroundColor: item.colorInterp,
+									borderColor: item.borderColorInterp,
 								}}
 							></Animated.View>
 						);
@@ -133,12 +144,24 @@ const DynamicBar = ({ sortAlgo }) => {
 						let barNum = getAnimVal.length;
 						let newVal = Math.floor(Math.random() * 70 + 30);
 						let val = new Animated.Value(newVal);
-						let colorRaw = new Animated.Value(0);
-						let colorInterpolation = colorRaw.interpolate({
-							inputRange: [0, 1],
-							outputRange: ["rgb(0,0,0)", "rgb(0,255,0)"],
+
+						let colorInterp = val.interpolate({
+							inputRange: [30, 100],
+							outputRange: BAR_COLOR_RANGE,
 						});
-						let newEle = { val, colorRaw, colorInterpolation };
+
+						let borderColorRaw = new Animated.Value(0);
+						let borderColorInterp = borderColorRaw.interpolate({
+							inputRange: [0, 1],
+							outputRange: BORDER_COLOR_RANGE,
+						});
+
+						let newEle = {
+							val,
+							colorInterp,
+							borderColorRaw,
+							borderColorInterp,
+						};
 						SetAnimVal([...getAnimVal, newEle]);
 						changeBarWidth(barNum + 1);
 					}}
@@ -167,7 +190,7 @@ const styles = StyleSheet.create({
 		width: 40,
 		borderRadius: 50,
 		borderColor: "white",
-		borderWidth: 2,
+		borderWidth: 5,
 		backgroundColor: "black",
 		alignSelf: "flex-end",
 
