@@ -43,7 +43,7 @@ const DynamicHomeScreen = ({ navigation }) => {
 					/>
 					<DynamicCell
 						passdown={{ setter: setButt2 }}
-						sortAlgo="Bubble Sort"
+						sortAlgo="Insertion Sort"
 						callBack={() => navigation.navigate("InsertionSort")}
 					/>
 				</View>

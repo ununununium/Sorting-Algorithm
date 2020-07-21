@@ -17,7 +17,7 @@ const InsertionSortScreen = () => {
 	return (
 		<ScrollView style={styles.screen}>
 			<SortTitle title="Insertion sort" />
-			<DynamicBar sortAlgo="Bubble Sort" />
+			<DynamicBar sortAlgo="Insertion Sort" />
 			<SortContent complexity={complexity} Description={desc} />
 		</ScrollView>
 	);

@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { bubbleSort } from "../Algorithms/SortAlgos";
+import { bubbleSort, insertionSort } from "../Algorithms/SortAlgos";
 
 var WIDTH = Dimensions.get("window").width;
 var HEIGHT = 100;
@@ -88,6 +88,15 @@ const DynamicBar = ({
 	//........................ animVals Getter and Setter ........................
 	const [getAnimVal, SetAnimVal] = useState(animVals);
 	//........................ Bar Swap Animation ........................
+	function animSetValue(index, value) {
+		Animated.timing(getAnimVal[index].val, {
+			toValue: value,
+			duration: SLEEP_SEC - 50,
+			useNativeDriver: false,
+		}).start();
+	}
+
+	//........................ Bar Swap Animation ........................
 	function animSwap(a, b) {
 		const a_val = getAnimVal[a].val._value;
 		const b_val = getAnimVal[b].val._value;
@@ -127,6 +136,10 @@ const DynamicBar = ({
 		switch (sortAlgo) {
 			case "Bubble Sort":
 				bubbleSort(animSwap, getAnimVal, visit, unvisit, SLEEP_SEC);
+				break;
+			case "Insertion Sort":
+				insertionSort(animSetValue, getAnimVal, visit, unvisit, SLEEP_SEC);
+				break;
 		}
 	}
 
