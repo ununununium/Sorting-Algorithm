@@ -11,18 +11,34 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import { bubbleSort } from "../Algorithms/SortAlgos";
 
-const WIDTH = Dimensions.get("window").width;
+var WIDTH = Dimensions.get("window").width;
+var HEIGHT = 100;
+var HEIGHT_RANGE = [HEIGHT * 0.3, HEIGHT];
+
+var BORDER_WIDTH = 5;
+var BORDER_COLOR = "white";
+
 const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
 const SLEEP_SEC = 350; //recommend 150-300
 
-const BORDER_COLOR_RANGE = ["rgb(242,242,242)", "rgb(227,168,255)"];
+var BORDER_COLOR_RANGE = [BORDER_COLOR, "rgb(227,168,255)"];
 const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
 
-const cfc = () => {
-	console.log("233");
-};
-
-const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
+const DynamicBar = ({
+	sortAlgo,
+	passdown,
+	hideButton,
+	screenWidth,
+	screenHeight,
+	barBorderWidth,
+	barBorderColor,
+}) => {
+	WIDTH = screenWidth ? screenWidth : Dimensions.get("window").width;
+	HEIGHT = screenHeight ? screenHeight : 100;
+	HEIGHT_RANGE = [HEIGHT * 0.3, HEIGHT];
+	BORDER_WIDTH = barBorderWidth ? barBorderWidth : 5;
+	BORDER_COLOR = barBorderColor ? barBorderColor : "rgb(242,242,242)";
+	BORDER_COLOR_RANGE = [BORDER_COLOR, "rgb(227,168,255)"];
 	if (passdown) {
 		useEffect(() => {
 			passdown.setter({ sort, addBar, removeBar });
@@ -48,6 +64,10 @@ const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
 
 	for (var i = 0; i < DEFAULT_BARS.length; i++) {
 		animVals[i].val = useState(new Animated.Value(DEFAULT_BARS[i]))[0];
+		animVals[i].heightInterp = animVals[i].val.interpolate({
+			inputRange: [30, 100],
+			outputRange: HEIGHT_RANGE,
+		});
 	}
 
 	for (var i = 0; i < DEFAULT_BARS.length; i++) {
@@ -105,7 +125,7 @@ const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
 
 	function sort() {
 		switch (sortAlgo) {
-			case "bubbleSort":
+			case "Bubble Sort":
 				bubbleSort(animSwap, getAnimVal, visit, unvisit, SLEEP_SEC);
 		}
 	}
@@ -126,11 +146,17 @@ const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
 			outputRange: BORDER_COLOR_RANGE,
 		});
 
+		heightInterp = val.interpolate({
+			inputRange: [30, 100],
+			outputRange: HEIGHT_RANGE,
+		});
+
 		let newEle = {
 			val,
 			colorInterp,
 			borderColorRaw,
 			borderColorInterp,
+			heightInterp,
 		};
 		SetAnimVal([...getAnimVal, newEle]);
 		changeBarWidth(barNum + 1);
@@ -147,7 +173,7 @@ const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
 	//........................ Dynamic Bar Render ........................
 	return (
 		<View style={styles.frame}>
-			<View style={styles.barCollection}>
+			<View style={{ ...styles.barCollection, height: HEIGHT + 10 }}>
 				<FlatList
 					showsHorizontalScrollIndicator={false}
 					horizontal
@@ -158,10 +184,11 @@ const DynamicBar = ({ sortAlgo, passdown, hideButton }) => {
 							<Animated.View
 								style={{
 									...styles.bar,
-									height: item.val,
+									height: item.heightInterp,
 									width: animWidth,
 									backgroundColor: item.colorInterp,
 									borderColor: item.borderColorInterp,
+									borderWidth: BORDER_WIDTH,
 								}}
 							></Animated.View>
 						);
@@ -194,7 +221,7 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	barCollection: {
-		height: 120,
+		height: HEIGHT + 10,
 		flexDirection: "row",
 		justifyContent: "space-around",
 		alignItems: "flex-end",
@@ -204,7 +231,7 @@ const styles = StyleSheet.create({
 		width: 40,
 		borderRadius: 50,
 		borderColor: "white",
-		borderWidth: 5,
+		borderWidth: BORDER_WIDTH,
 		backgroundColor: "black",
 		alignSelf: "flex-end",
 

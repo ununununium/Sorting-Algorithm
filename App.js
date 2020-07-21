@@ -11,6 +11,8 @@ import ShellSortScreen from "./src/screens/ShellSortScreen";
 import SlowSortScreen from "./src/screens/SlowSortScreen";
 import CocktailShakerSortScreen from "./src/screens/CocktailShakerSortScreen";
 import DynamicHomeScreen from "./src/screens/DynamicHomeScreen";
+import { Button, Text } from "react-native";
+import React from "react";
 
 const navigator = createStackNavigator(
 	{

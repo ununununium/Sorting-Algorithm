@@ -23,17 +23,21 @@ const TestScreen = () => {
 			<DynamicBar
 				passdown={{ setter: setButt1 }}
 				hideButton={true}
-				sortAlgo="bubbleSort"
+				sortAlgo="Bubble Sort"
+				screenWidth={200}
+				screenHeight={100}
+				barBorderWidth={3}
+				barBorderColor="black"
 			/>
 			<DynamicBar
 				passdown={{ setter: setButt2 }}
 				hideButton={true}
-				sortAlgo="bubbleSort"
+				sortAlgo="Bubble Sort"
 			/>
 			<DynamicBar
 				passdown={{ setter: setButt3 }}
 				hideButton={true}
-				sortAlgo="bubbleSort"
+				sortAlgo="Bubble Sort"
 			/>
 
 			<Button
