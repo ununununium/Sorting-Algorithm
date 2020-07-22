@@ -97,27 +97,89 @@ const DynamicHomeScreen = ({ navigation }) => {
 };
 
 DynamicHomeScreen.navigationOptions = {
-	title: "Algorithms",
-	headerRight: () => (
-		<TouchableOpacity style={styles.sortAllButton} onPress={() => sortAll()}>
-			<Text style={styles.buttonText}>Sort All</Text>
-		</TouchableOpacity>
+	title: "",
+	headerLeft: () => (
+		<View style={styles.headerLeft}>
+			<TouchableOpacity
+				style={styles.titleButton}
+				onPress={() => console.log("Title Clicked")}
+			>
+				<Text style={styles.titleButtonText}>Sort Algo</Text>
+			</TouchableOpacity>
+		</View>
 	),
+	headerRight: () => (
+		<View style={styles.headerRight}>
+			<View
+				style={{
+					width: CELL_WIDTH,
+					flexDirection: "row",
+					justifyContent: "space-around",
+				}}
+			>
+				<TouchableOpacity
+					style={styles.sortAllButton}
+					onPress={() => console.log("Shuffle All")}
+				>
+					<Text style={styles.buttonText}>Shuffle</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.sortAllButton}
+					onPress={() => sortAll()}
+				>
+					<Text style={styles.buttonText}>Sort</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+	),
+	headerStyle: {
+		backgroundColor: "#889BF2",
+	},
 };
 
 const styles = StyleSheet.create({
+	titleButton: {
+		width: CELL_WIDTH,
+		height: HEIGHT / 20,
+		// backgroundColor: "#5C69A4",
+		borderRadius: 10,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	titleButtonText: {
+		color: "white",
+		fontWeight: "bold",
+		fontSize: 26,
+	},
 	sortAllButton: {
 		width: WIDTH / 6,
-		height: 30,
-		backgroundColor: "black",
-		borderRadius: 20,
+		height: HEIGHT / 30,
+		backgroundColor: "#5C69A4",
+		borderRadius: 10,
 		marginRight: WIDTH / 15,
 		marginLeft: WIDTH / 15,
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	headerLeft: {
+		width: WIDTH / 2,
+		// borderWidth: 1,
+		// borderColor: "black",
+		flexDirection: "row",
+		justifyContent: "space-around",
+	},
+
+	headerRight: {
+		width: WIDTH / 2,
+		// borderWidth: 1,
+		// borderColor: "black",
+		flexDirection: "row",
+		justifyContent: "center",
+	},
+
 	buttonText: {
 		color: "white",
+		fontWeight: "bold",
 	},
 	hbox: {
 		paddingTop: 12,
