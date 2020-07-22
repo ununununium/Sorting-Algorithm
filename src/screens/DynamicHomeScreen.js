@@ -34,72 +34,68 @@ const DynamicHomeScreen = ({ navigation }) => {
 	};
 
 	shuffleAll = () => {
-		buttons.forEach((e) => {
-			e.shuffle();
-		});
+		buttons.forEach((e) => e.shuffle());
 	};
 
 	return (
-		<View>
-			<ScrollView>
-				<View style={styles.hbox}>
-					<DynamicCell
-						passdown={{ setter: setButt1 }}
-						sortAlgo="Bubble Sort"
-						callBack={() => navigation.navigate("BubbleSort")}
-						color="#FFB756"
-					/>
-					<DynamicCell
-						passdown={{ setter: setButt2 }}
-						sortAlgo="Insertion Sort"
-						callBack={() => navigation.navigate("InsertionSort")}
-						color="#F7679A"
-					/>
-				</View>
-				<View style={styles.hbox}>
-					<DynamicCell
-						passdown={{ setter: setButt3 }}
-						sortAlgo="Quick Sort"
-						callBack={() => navigation.navigate("QuickSort")}
-						color="#EC6642"
-					/>
-					<DynamicCell
-						passdown={{ setter: setButt4 }}
-						sortAlgo="Heap Sort"
-						callBack={() => navigation.navigate("HeapSort")}
-						color="#7364C7"
-					/>
-				</View>
-				<View style={styles.hbox}>
-					<DynamicCell
-						passdown={{ setter: setButt5 }}
-						sortAlgo="Bubble Sort"
-						callBack={() => navigation.navigate("SelectionSort")}
-						color="#51B8F2"
-					/>
-					<DynamicCell
-						passdown={{ setter: setButt6 }}
-						sortAlgo="Bubble Sort"
-						callBack={() => navigation.navigate("ShellSort")}
-						color="#9B7F69"
-					/>
-				</View>
-				<View style={styles.hbox}>
-					<DynamicCell
-						passdown={{ setter: setButt7 }}
-						sortAlgo="Bubble Sort"
-						callBack={() => navigation.navigate("SlowSort")}
-						color="#58DC88"
-					/>
-					<DynamicCell
-						passdown={{ setter: setButt8 }}
-						sortAlgo="Bubble Sort"
-						callBack={() => navigation.navigate("CocktailShakerSort")}
-						color="#C4234D"
-					/>
-				</View>
-			</ScrollView>
-		</View>
+		<ScrollView style={{ backgroundColor: "#E2E6FA" }}>
+			<View style={styles.hbox}>
+				<DynamicCell
+					passdown={{ setter: setButt1 }}
+					sortAlgo="Bubble Sort"
+					callBack={() => navigation.navigate("BubbleSort")}
+					color="#FFB756"
+				/>
+				<DynamicCell
+					passdown={{ setter: setButt2 }}
+					sortAlgo="Insertion Sort"
+					callBack={() => navigation.navigate("InsertionSort")}
+					color="#F7679A"
+				/>
+			</View>
+			<View style={styles.hbox}>
+				<DynamicCell
+					passdown={{ setter: setButt3 }}
+					sortAlgo="Quick Sort"
+					callBack={() => navigation.navigate("QuickSort")}
+					color="#EC6642"
+				/>
+				<DynamicCell
+					passdown={{ setter: setButt4 }}
+					sortAlgo="Heap Sort"
+					callBack={() => navigation.navigate("HeapSort")}
+					color="#7364C7"
+				/>
+			</View>
+			<View style={styles.hbox}>
+				<DynamicCell
+					passdown={{ setter: setButt5 }}
+					sortAlgo="Bubble Sort"
+					callBack={() => navigation.navigate("SelectionSort")}
+					color="#51B8F2"
+				/>
+				<DynamicCell
+					passdown={{ setter: setButt6 }}
+					sortAlgo="Bubble Sort"
+					callBack={() => navigation.navigate("ShellSort")}
+					color="#9B7F69"
+				/>
+			</View>
+			<View style={styles.hbox}>
+				<DynamicCell
+					passdown={{ setter: setButt7 }}
+					sortAlgo="Bubble Sort"
+					callBack={() => navigation.navigate("SlowSort")}
+					color="#58DC88"
+				/>
+				<DynamicCell
+					passdown={{ setter: setButt8 }}
+					sortAlgo="Bubble Sort"
+					callBack={() => navigation.navigate("CocktailShakerSort")}
+					color="#C4234D"
+				/>
+			</View>
+		</ScrollView>
 	);
 };
 
