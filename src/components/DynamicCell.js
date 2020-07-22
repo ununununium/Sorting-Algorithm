@@ -14,21 +14,25 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const CELL_WIDTH = (HEIGHT - 190) / 4;
 
-const DynamicCell = ({ callBack, passdown, sortAlgo }) => {
+const DynamicCell = ({ callBack, passdown, sortAlgo, color }) => {
 	return (
-		<TouchableOpacity style={styles.box} onPress={() => callBack()}>
+		<TouchableOpacity
+			style={[styles.box, { backgroundColor: color }]}
+			onPress={() => callBack()}
+		>
 			<View style={styles.bar}>
 				<DynamicBar
 					sortAlgo={sortAlgo}
 					passdown={passdown}
 					hideButton={true}
-					screenWidth={CELL_WIDTH - 10}
+					screenWidth={CELL_WIDTH}
 					screenHeight={CELL_WIDTH - 100}
-					barBorderWidth={3}
-					barBorderColor="black"
+					barBorderWidth={2.5}
+					barBorderColor={color}
+					barMargin={5}
 				/>
 			</View>
-			<View style={styles.sep} />
+			{/* <View style={styles.sep} /> */}
 			<View style={styles.text}>
 				<Text style={styles.title}>{sortAlgo}</Text>
 			</View>

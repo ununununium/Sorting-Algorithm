@@ -6,12 +6,15 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Dimensions,
+	Button,
 } from "react-native";
 import DynamicCell from "../components/DynamicCell";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 const CELL_WIDTH = (HEIGHT - 190) / 4;
+
+var sortAll = null;
 
 const DynamicHomeScreen = ({ navigation }) => {
 	const [butt1, setButt1] = useState({});
@@ -25,26 +28,25 @@ const DynamicHomeScreen = ({ navigation }) => {
 
 	const buttons = [butt1, butt2, butt3, butt4, butt5, butt6, butt7, butt8];
 
-	function startAll() {
+	sortAll = () => {
 		buttons.forEach((e) => e.sort());
-	}
+	};
 
 	return (
 		<View>
-			<TouchableOpacity style={styles.startButton} onPress={() => startAll()}>
-				<Text style={styles.buttonText}>Start All</Text>
-			</TouchableOpacity>
 			<ScrollView>
 				<View style={styles.hbox}>
 					<DynamicCell
 						passdown={{ setter: setButt1 }}
 						sortAlgo="Bubble Sort"
 						callBack={() => navigation.navigate("BubbleSort")}
+						color="#FFB756"
 					/>
 					<DynamicCell
 						passdown={{ setter: setButt2 }}
 						sortAlgo="Insertion Sort"
 						callBack={() => navigation.navigate("InsertionSort")}
+						color="#F7679A"
 					/>
 				</View>
 				<View style={styles.hbox}>
@@ -52,11 +54,13 @@ const DynamicHomeScreen = ({ navigation }) => {
 						passdown={{ setter: setButt3 }}
 						sortAlgo="Quick Sort"
 						callBack={() => navigation.navigate("QuickSort")}
+						color="#EC6642"
 					/>
 					<DynamicCell
 						passdown={{ setter: setButt4 }}
 						sortAlgo="Heap Sort"
 						callBack={() => navigation.navigate("HeapSort")}
+						color="#7364C7"
 					/>
 				</View>
 				<View style={styles.hbox}>
@@ -64,11 +68,13 @@ const DynamicHomeScreen = ({ navigation }) => {
 						passdown={{ setter: setButt5 }}
 						sortAlgo="Bubble Sort"
 						callBack={() => navigation.navigate("SelectionSort")}
+						color="#51B8F2"
 					/>
 					<DynamicCell
 						passdown={{ setter: setButt6 }}
 						sortAlgo="Bubble Sort"
 						callBack={() => navigation.navigate("ShellSort")}
+						color="#9B7F69"
 					/>
 				</View>
 				<View style={styles.hbox}>
@@ -76,11 +82,13 @@ const DynamicHomeScreen = ({ navigation }) => {
 						passdown={{ setter: setButt7 }}
 						sortAlgo="Bubble Sort"
 						callBack={() => navigation.navigate("SlowSort")}
+						color="#58DC88"
 					/>
 					<DynamicCell
 						passdown={{ setter: setButt8 }}
 						sortAlgo="Bubble Sort"
 						callBack={() => navigation.navigate("CocktailShakerSort")}
+						color="#C4234D"
 					/>
 				</View>
 			</ScrollView>
@@ -88,15 +96,23 @@ const DynamicHomeScreen = ({ navigation }) => {
 	);
 };
 
+DynamicHomeScreen.navigationOptions = {
+	title: "Algorithms",
+	headerRight: () => (
+		<TouchableOpacity style={styles.sortAllButton} onPress={() => sortAll()}>
+			<Text style={styles.buttonText}>Sort All</Text>
+		</TouchableOpacity>
+	),
+};
+
 const styles = StyleSheet.create({
-	startButton: {
-		// width: WIDTH * 0.8,
+	sortAllButton: {
+		width: WIDTH / 6,
 		height: 30,
 		backgroundColor: "black",
 		borderRadius: 20,
-		marginLeft: 10,
-		marginRight: 10,
-		marginTop: 10,
+		marginRight: WIDTH / 15,
+		marginLeft: WIDTH / 15,
 		alignItems: "center",
 		justifyContent: "center",
 	},

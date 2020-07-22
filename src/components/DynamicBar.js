@@ -21,12 +21,12 @@ var HEIGHT = 100;
 var HEIGHT_RANGE = [HEIGHT * 0.3, HEIGHT];
 
 var BORDER_WIDTH = 5;
-var BORDER_COLOR = "white";
+var BAR_MARGIN = 5;
 
-const DEFAULT_BARS = [76, 44, 96, 55, 84, 66, 41, 52, 88, 77];
-const SLEEP_SEC = 350; //recommend 150-300
+const DEFAULT_BARS = [77, 44, 99, 55, 88, 66, 33];
+const SLEEP_SEC = 350;
 
-var BORDER_COLOR_RANGE = [BORDER_COLOR, "rgb(227,168,255)"];
+var BORDER_COLOR_RANGE = ["rgba(227,168,255,0)", "rgba(227,168,255,1)"];
 const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
 
 const DynamicBar = ({
@@ -36,14 +36,14 @@ const DynamicBar = ({
 	screenWidth,
 	screenHeight,
 	barBorderWidth,
-	barBorderColor,
+	barMargin,
 }) => {
 	WIDTH = screenWidth ? screenWidth : Dimensions.get("window").width;
 	HEIGHT = screenHeight ? screenHeight : 100;
 	HEIGHT_RANGE = [HEIGHT * 0.3, HEIGHT];
 	BORDER_WIDTH = barBorderWidth ? barBorderWidth : 5;
-	BORDER_COLOR = barBorderColor ? barBorderColor : "rgb(242,242,242)";
-	BORDER_COLOR_RANGE = [BORDER_COLOR, "rgb(227,168,255)"];
+	BAR_MARGIN = barMargin ? barMargin : 5;
+
 	if (passdown) {
 		useEffect(() => {
 			passdown.setter({ sort, addBar, removeBar });
@@ -52,12 +52,14 @@ const DynamicBar = ({
 
 	//........................ Bar Width Animation ........................
 	const animWidth = useState(
-		new Animated.Value((WIDTH - 40) / DEFAULT_BARS.length)
+		new Animated.Value(
+			(WIDTH - DEFAULT_BARS.length * BAR_MARGIN - 40) / DEFAULT_BARS.length
+		)
 	)[0];
 
 	function changeBarWidth(barNum) {
 		Animated.timing(animWidth, {
-			toValue: (WIDTH - 40) / barNum,
+			toValue: (WIDTH - barNum * BAR_MARGIN - 40) / barNum,
 			duration: SLEEP_SEC,
 			useNativeDriver: false,
 		}).start();
@@ -178,7 +180,7 @@ const DynamicBar = ({
 			outputRange: BORDER_COLOR_RANGE,
 		});
 
-		heightInterp = val.interpolate({
+		let heightInterp = val.interpolate({
 			inputRange: [30, 100],
 			outputRange: HEIGHT_RANGE,
 		});
@@ -205,7 +207,13 @@ const DynamicBar = ({
 	//........................ Dynamic Bar Render ........................
 	return (
 		<View style={styles.frame}>
-			<View style={{ ...styles.barCollection, height: HEIGHT + 10 }}>
+			<View
+				style={{
+					...styles.barCollection,
+					height: HEIGHT + 10,
+					width: WIDTH - 40 - BAR_MARGIN,
+				}}
+			>
 				<FlatList
 					showsHorizontalScrollIndicator={false}
 					horizontal
@@ -221,6 +229,7 @@ const DynamicBar = ({
 									backgroundColor: item.colorInterp,
 									borderColor: item.borderColorInterp,
 									borderWidth: BORDER_WIDTH,
+									marginRight: BAR_MARGIN,
 								}}
 							></Animated.View>
 						);
@@ -250,9 +259,17 @@ const DynamicBar = ({
 
 const styles = StyleSheet.create({
 	frame: {
-		padding: 20,
+		// borderWidth: 1,
+		borderColor: "black",
+
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	barCollection: {
+		// borderWidth: 1,
+		// borderColor: "black",
+		// width: WIDTH - 40 - BAR_MARGIN,
+
 		height: HEIGHT + 10,
 		flexDirection: "row",
 		justifyContent: "space-around",
@@ -269,6 +286,7 @@ const styles = StyleSheet.create({
 
 		alignItems: "center",
 		justifyContent: "flex-end",
+		marginRight: BAR_MARGIN,
 	},
 	barText: {
 		fontSize: 14,
