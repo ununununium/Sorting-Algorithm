@@ -15,6 +15,7 @@ const HEIGHT = Dimensions.get("window").height;
 const CELL_WIDTH = (HEIGHT - 190) / 4;
 
 var sortAll = null;
+var shuffleAll = null;
 
 const DynamicHomeScreen = ({ navigation }) => {
 	const [butt1, setButt1] = useState({});
@@ -30,6 +31,12 @@ const DynamicHomeScreen = ({ navigation }) => {
 
 	sortAll = () => {
 		buttons.forEach((e) => e.sort());
+	};
+
+	shuffleAll = () => {
+		buttons.forEach((e) => {
+			e.shuffle();
+		});
 	};
 
 	return (
@@ -113,7 +120,10 @@ DynamicHomeScreen.navigationOptions = {
 			<View style={styles.headerRightInside}>
 				<TouchableOpacity
 					style={styles.sortAllButton}
-					onPress={() => console.log("Shuffle All")}
+					onPress={() => {
+						console.log("Shuffle All");
+						shuffleAll();
+					}}
 				>
 					<Text style={styles.buttonText}>Shuffle</Text>
 				</TouchableOpacity>

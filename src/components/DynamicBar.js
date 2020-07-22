@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import {
+	knuthShuffle,
 	bubbleSort,
 	insertionSort,
 	quickSort,
@@ -46,7 +47,7 @@ const DynamicBar = ({
 
 	if (passdown) {
 		useEffect(() => {
-			passdown.setter({ sort, addBar, removeBar });
+			passdown.setter({ sort, shuffle, addBar, removeBar });
 		}, []);
 	}
 
@@ -162,6 +163,10 @@ const DynamicBar = ({
 				heapSort(getAnimVal, animSwap, visit, unvisit, SLEEP_SEC);
 				break;
 		}
+	}
+
+	function shuffle() {
+		knuthShuffle(getAnimVal, animSwap, visit, unvisit, SLEEP_SEC);
 	}
 
 	function addBar() {
