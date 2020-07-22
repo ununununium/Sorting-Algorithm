@@ -110,13 +110,7 @@ DynamicHomeScreen.navigationOptions = {
 	),
 	headerRight: () => (
 		<View style={styles.headerRight}>
-			<View
-				style={{
-					width: CELL_WIDTH,
-					flexDirection: "row",
-					justifyContent: "space-around",
-				}}
-			>
+			<View style={styles.headerRightInside}>
 				<TouchableOpacity
 					style={styles.sortAllButton}
 					onPress={() => console.log("Shuffle All")}
@@ -175,6 +169,11 @@ const styles = StyleSheet.create({
 		// borderColor: "black",
 		flexDirection: "row",
 		justifyContent: "center",
+	},
+	headerRightInside: {
+		width: CELL_WIDTH,
+		flexDirection: "row",
+		justifyContent: "space-around",
 	},
 
 	buttonText: {
