@@ -9,7 +9,12 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { bubbleSort, insertionSort, quickSort } from "../Algorithms/SortAlgos";
+import {
+	bubbleSort,
+	insertionSort,
+	quickSort,
+	heapSort,
+} from "../Algorithms/SortAlgos";
 
 var WIDTH = Dimensions.get("window").width;
 var HEIGHT = 100;
@@ -118,7 +123,7 @@ const DynamicBar = ({
 	function visit(idx) {
 		Animated.timing(getAnimVal[idx].borderColorRaw, {
 			toValue: 1,
-			duration: SLEEP_SEC - 50,
+			duration: SLEEP_SEC / 2,
 			useNativeDriver: false,
 		}).start();
 	}
@@ -126,7 +131,7 @@ const DynamicBar = ({
 	function unvisit(idx) {
 		Animated.timing(getAnimVal[idx].borderColorRaw, {
 			toValue: 0,
-			duration: SLEEP_SEC - 50,
+			duration: SLEEP_SEC / 2,
 			useNativeDriver: false,
 		}).start();
 	}
@@ -150,6 +155,9 @@ const DynamicBar = ({
 					unvisit,
 					SLEEP_SEC
 				);
+				break;
+			case "Heap Sort":
+				heapSort(getAnimVal, animSwap, visit, unvisit, SLEEP_SEC);
 				break;
 		}
 	}

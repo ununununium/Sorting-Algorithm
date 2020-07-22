@@ -5,7 +5,7 @@ import DynamicBar from "../components/DynamicBar";
 const HeapSortScreen = () => {
 	return (
 		<View>
-			<DynamicBar sortAlgo="Bubble Sort" />
+			<DynamicBar sortAlgo="Heap Sort" />
 		</View>
 	);
 };
