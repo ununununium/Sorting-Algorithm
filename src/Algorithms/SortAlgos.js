@@ -167,4 +167,25 @@ async function heapSort(input, swap, visit, unvisit, sleepSec) {
 	return;
 }
 
-export { bubbleSort, insertionSort, quickSort, heapSort };
+async function knuthShuffle(array, swap, visit, unvisit, sleepSec) {
+	var m = array.length,
+		t,
+		i;
+
+	// While there remain elements to shuffle…
+	while (m) {
+		i = Math.floor(Math.random() * m--);
+		visit(m);
+		visit(i);
+		await sleep(sleepSec / SLEEP_DIV);
+
+		swap(m, i);
+		await sleep(sleepSec);
+
+		unvisit(m);
+		unvisit(i);
+		await sleep(sleepSec / SLEEP_DIV);
+	}
+}
+
+export { bubbleSort, insertionSort, quickSort, heapSort, knuthShuffle };
