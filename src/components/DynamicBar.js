@@ -7,6 +7,7 @@ import {
 	FlatList,
 	Dimensions,
 	TouchableOpacity,
+	Text,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import {
@@ -16,6 +17,11 @@ import {
 	quickSort,
 	heapSort,
 } from "../Algorithms/SortAlgos";
+import AnimatedTabBar from "./AnimatedTabBar";
+
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 var WIDTH = Dimensions.get("window").width;
 var HEIGHT = 100;
@@ -24,8 +30,8 @@ var HEIGHT_RANGE = [HEIGHT * 0.3, HEIGHT];
 var BORDER_WIDTH = 5;
 var BAR_MARGIN = 5;
 
-const DEFAULT_BARS = [77, 44, 99, 55, 88, 66, 33];
-const SLEEP_SEC = 350;
+var DEFAULT_BARS = [77, 44, 99, 55, 88, 66, 33];
+// var SLEEP_SEC = 350;
 
 var BORDER_COLOR_RANGE = ["rgba(227,168,255,0)", "rgba(227,168,255,1)"];
 const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
@@ -38,18 +44,22 @@ const DynamicBar = ({
 	screenHeight,
 	barBorderWidth,
 	barMargin,
+	defaultBars,
 }) => {
 	WIDTH = screenWidth ? screenWidth : Dimensions.get("window").width;
 	HEIGHT = screenHeight ? screenHeight : 100;
 	HEIGHT_RANGE = [HEIGHT * 0.3, HEIGHT];
 	BORDER_WIDTH = barBorderWidth ? barBorderWidth : 5;
 	BAR_MARGIN = barMargin ? barMargin : 5;
+	DEFAULT_BARS = defaultBars ? defaultBars : [77, 44, 99, 55, 88, 66, 33];
 
 	if (passdown) {
 		useEffect(() => {
 			passdown.setter({ sort, shuffle, addBar, removeBar });
 		}, []);
 	}
+
+	const [SLEEP_SEC, setSleepSec] = useState(350);
 
 	//........................ Bar Width Animation ........................
 	const animWidth = useState(
@@ -212,50 +222,104 @@ const DynamicBar = ({
 	//........................ Dynamic Bar Render ........................
 	return (
 		<View style={styles.frame}>
-			<View
-				style={{
-					...styles.barCollection,
-					height: HEIGHT + 10,
-					width: WIDTH - 40 - BAR_MARGIN,
-				}}
-			>
-				<FlatList
-					showsHorizontalScrollIndicator={false}
-					horizontal
-					keyExtractor={(item, i) => "" + i}
-					data={getAnimVal}
-					renderItem={({ item }) => {
-						return (
-							<Animated.View
-								style={{
-									...styles.bar,
-									height: item.heightInterp,
-									width: animWidth,
-									backgroundColor: item.colorInterp,
-									borderColor: item.borderColorInterp,
-									borderWidth: BORDER_WIDTH,
-									marginRight: BAR_MARGIN,
-								}}
-							></Animated.View>
-						);
+			{hideButton ? <View /> : <View style={{ height: 40 }} />}
+			<View style={{ alignItems: "center" }}>
+				<View
+					style={{
+						...styles.barCollection,
+						height: HEIGHT + 10,
+						width: WIDTH - 40 - BAR_MARGIN,
 					}}
-				/>
+				>
+					<FlatList
+						scrollEnabled={false}
+						showsHorizontalScrollIndicator={false}
+						horizontal
+						keyExtractor={(item, i) => "" + i}
+						data={getAnimVal}
+						renderItem={({ item }) => {
+							return (
+								<Animated.View
+									style={{
+										...styles.bar,
+										height: item.heightInterp,
+										width: animWidth,
+										backgroundColor: item.colorInterp,
+										borderColor: item.borderColorInterp,
+										borderWidth: BORDER_WIDTH,
+										marginRight: BAR_MARGIN,
+									}}
+								></Animated.View>
+							);
+						}}
+					/>
+				</View>
 			</View>
 
 			{hideButton ? (
 				<View />
 			) : (
 				<View>
-					<View style={styles.buttonView}>
-						<TouchableOpacity onPress={() => removeBar()}>
-							<AntDesign name="minussquare" size={50} color="black" />
+					<View style={{ height: 30 }} />
+					<AnimatedTabBar
+						buttonTitles={["Slow", "Medium", "Fast"]}
+						icon={{
+							FstIcon: MaterialCommunityIcons,
+							SecIcon: MaterialCommunityIcons,
+							TrdIcon: MaterialCommunityIcons,
+							fstIconName: "speedometer-slow",
+							secIconName: "speedometer-medium",
+							trdIconName: "speedometer",
+						}}
+						action={{
+							fstAction: () => {
+								setSleepSec(350);
+							},
+							secAction: () => {
+								setSleepSec(275);
+							},
+							trdAction: () => {
+								setSleepSec(200);
+							},
+						}}
+					/>
+					<View style={styles.buttonBar}>
+						<TouchableOpacity style={styles.button} onPress={addBar}>
+							<Text style={styles.buttonText}>+</Text>
 						</TouchableOpacity>
-						<View style={{ width: 100 }} />
-						<TouchableOpacity onPress={() => addBar()}>
-							<AntDesign name="plussquare" size={50} color="black" />
+						<TouchableOpacity style={styles.button} onPress={removeBar}>
+							<Text style={styles.buttonText}>-</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.button} onPress={shuffle}>
+							<Text style={styles.buttonText}>Shuffle</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.button} onPress={sort}>
+							<Text style={styles.buttonText}>Sort</Text>
 						</TouchableOpacity>
 					</View>
-					<Button title="Sort It !!!" onPress={() => sort()} />
+
+					<AnimatedTabBar
+						buttonTitles={["Cplx.", "Desc.", "Code"]}
+						icon={{
+							FstIcon: Ionicons,
+							SecIcon: MaterialCommunityIcons,
+							TrdIcon: FontAwesome,
+							fstIconName: "ios-speedometer",
+							secIconName: "file-document-box-outline",
+							trdIconName: "file-code-o",
+						}}
+						action={{
+							fstAction: () => {
+								console.log("show complexity");
+							},
+							secAction: () => {
+								console.log("show description");
+							},
+							trdAction: () => {
+								console.log("show code");
+							},
+						}}
+					/>
 				</View>
 			)}
 		</View>
@@ -265,10 +329,9 @@ const DynamicBar = ({
 const styles = StyleSheet.create({
 	frame: {
 		// borderWidth: 1,
-		borderColor: "black",
-
-		alignItems: "center",
-		justifyContent: "center",
+		// borderColor: "black",
+		// alignItems: "center",
+		// justifyContent: "center",
 	},
 	barCollection: {
 		// borderWidth: 1,
@@ -302,6 +365,32 @@ const styles = StyleSheet.create({
 		padding: 20,
 		flexDirection: "row",
 		alignSelf: "center",
+	},
+	background: {
+		backgroundColor: "#E2E6FA",
+	},
+	numBar: {
+		paddingTop: 30,
+		paddingBottom: 30,
+	},
+	buttonBar: {
+		height: 70,
+		backgroundColor: "#6D82E2",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-around",
+	},
+	button: {
+		height: 35,
+		width: WIDTH / 5,
+		backgroundColor: "#5C69A4",
+		borderRadius: 21,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	buttonText: {
+		fontSize: 18,
+		color: "white",
 	},
 });
 
