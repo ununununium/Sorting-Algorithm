@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import DynamicBar from "../components/DynamicBar";
 import SortTitle from "../components/SortTitle";
 import SortContent from "../components/SortContent";
+
 const InsertionSortScreen = ({ navigation }) => {
   const complexity = {
     worst: "O(n^2)",

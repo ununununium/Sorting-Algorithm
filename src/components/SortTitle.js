@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 const SortTitle = ({ callBack, title }) => {
   const [flag, setFlag] = useState([false, true, false]);
-
+  const opacity = useState(new Animated.Value(0))[0];
   const handleSpeedBtn = (index) => {
     let ary = [false, false, false];
     ary[index] = ary[index] == true ? false : true;
     setFlag(ary);
-    console.log(ary);
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
   };
   return (
     <View>
@@ -15,28 +26,56 @@ const SortTitle = ({ callBack, title }) => {
         <Text style={styles.titleText}>{title}</Text>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.buttonView}
-          onPress={() => handleSpeedBtn(0)}>
-          <View style={[flag[0] ? styles.buttonTextLayer : {}]}>
-            <Text style={styles.buttonText}>Slow</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonView}
-          onPress={() => handleSpeedBtn(1)}>
-          <View style={[flag[1] ? styles.buttonTextLayer : {}]}>
-            <Text style={styles.buttonText}>Normal</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonView}
-          onPress={() => handleSpeedBtn(2)}>
-          <View style={[flag[2] ? styles.buttonTextLayer : {}]}>
-            <Text style={styles.buttonText}>Fast</Text>
-          </View>
-        </TouchableOpacity>
+      <View style={styles.btnGroupContainer}>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={() => handleSpeedBtn(0)}>
+            <Animated.View
+              style={[flag[0] ? styles.buttonTextLayer : {}, opacity]}>
+              <MaterialCommunityIcons
+                name="speedometer-slow"
+                size={46}
+                color="white"
+                style={[flag[0] ? styles.icon : {}]}
+              />
+              <Text style={[styles.buttonText, flag[0] ? {} : styles.hidden]}>
+                Slow
+              </Text>
+            </Animated.View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={() => handleSpeedBtn(1)}>
+            <Animated.View
+              style={[flag[1] ? styles.buttonTextLayer : {}, opacity]}>
+              <MaterialCommunityIcons
+                name="speedometer-medium"
+                size={46}
+                color="white"
+                style={[flag[1] ? styles.icon : {}]}
+              />
+              <Text style={[styles.buttonText, flag[1] ? {} : styles.hidden]}>
+                Medium
+              </Text>
+            </Animated.View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity onPress={() => handleSpeedBtn(2)}>
+            <Animated.View
+              style={[flag[2] ? styles.buttonTextLayer : {}, opacity]}>
+              <MaterialCommunityIcons
+                name="speedometer"
+                size={46}
+                color="white"
+                style={[flag[2] ? styles.icon : {}]}
+              />
+
+              <Text style={[styles.buttonText, flag[2] ? {} : styles.hidden]}>
+                Fast
+              </Text>
+            </Animated.View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -54,28 +93,39 @@ const styles = StyleSheet.create({
     borderBottomColor: "#e3e3e3",
     borderBottomWidth: 2,
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: 5,
-    paddingHorizontal: 17,
-    backgroundColor: "#f6f9ff",
-    borderRadius: 40,
-    paddingVertical: 8,
+  icon: {
+    marginLeft: 10,
   },
-  buttonView: {
-    flex: 3.3,
+  textDiv: {},
+
+  btnGroupContainer: {
+    height: 80,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: "#889bf2",
+  },
+  btnContainer: {
+    paddingVertical: 10,
+    justifyContent: "space-around",
   },
   buttonText: {
     textAlign: "center",
-    padding: 10,
-    color: "#53588b",
-    fontWeight: "bold",
+    color: "#ffffff",
+    fontSize: 15,
+    alignSelf: "center",
+    flex: 1,
   },
   buttonTextLayer: {
-    width: 100,
-    backgroundColor: "#e5eeff",
+    width: 130,
+    backgroundColor: "#5c69a4",
     borderRadius: 50,
+    flexDirection: "row",
+  },
+  hidden: {
+    width: 0,
+    height: 0,
   },
 });
 
