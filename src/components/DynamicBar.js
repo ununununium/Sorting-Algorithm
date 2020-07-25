@@ -162,6 +162,10 @@ const DynamicBar = ({
 			useNativeDriver: false,
 		}).start();
 	}
+	//............. Complexity Description Code init ...................
+	const [showCplx, setShowCplx] = useState(true);
+	const [showDesc, setShowDesc] = useState(false);
+	const [showCode, setShowCode] = useState(false);
 	//........................ Code Content Bar init....................
 	const barPos = useState(new Animated.Value(0))[0];
 	//........................ helper functions ........................
@@ -243,7 +247,7 @@ const DynamicBar = ({
 	}
 
 	function changeBarPos(toValue) {
-		console.log(toValue);
+		// console.log(toValue);
 		Animated.timing(barPos, {
 			toValue,
 			duration: 100,
@@ -343,16 +347,46 @@ const DynamicBar = ({
 						action={{
 							fstAction: () => {
 								console.log("show complexity");
+								setShowCplx(true);
+								setShowDesc(false);
+								setShowCode(false);
 							},
 							secAction: () => {
 								console.log("show description");
+								setShowCplx(false);
+								setShowDesc(true);
+								setShowCode(false);
 							},
 							trdAction: () => {
 								console.log("show code");
+								setShowCplx(false);
+								setShowDesc(false);
+								setShowCode(true);
 							},
 						}}
 					/>
-					<CodeContent barPos={barPos} data={bubbleSortCodeData} />
+
+					{showCplx ? (
+						<View>
+							<Text>show complexity</Text>
+						</View>
+					) : (
+						<View />
+					)}
+
+					{showDesc ? (
+						<View>
+							<Text>show description</Text>
+						</View>
+					) : (
+						<View />
+					)}
+
+					{showCode ? (
+						<CodeContent barPos={barPos} data={bubbleSortCodeData} />
+					) : (
+						<View />
+					)}
 				</View>
 			)}
 		</View>
