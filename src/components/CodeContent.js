@@ -10,15 +10,6 @@ import {
 } from "react-native";
 
 var WIDTH = Dimensions.get("window").width;
-const algo =
-	"bubbleSort(A){\n\t\
-let n = A.length\n\t\n\t\
-for(int i = 0; i<n-1;i++){\n\t\t\
-for(int j = 0; j < n-1; j++){\n\t\t\t\
-if(A[j] > A[j+1]){\n\t\t\t\t\
-swap(A[j],A[j+1])\n\t\t\t\
-}\n\t\t\
-}\n\t}\n}";
 
 const CodeContent = ({ barPos, data }) => {
 	// const barPos = useState(new Animated.Value(30))[0];

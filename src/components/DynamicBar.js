@@ -39,7 +39,7 @@ const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
 
 const bubbleSortCodeData = [
 	"bubbleSort(A){",
-	"\tlet n = A.length",
+	"\tint n = A.length",
 	"\tfor(int i = 0; i<n-1;i++){",
 	"\t\tfor(int j = 0; j < n-1; j++){",
 	"\t\t\tif(A[j] > A[j+1]){",
@@ -163,7 +163,7 @@ const DynamicBar = ({
 		}).start();
 	}
 	//........................ Code Content Bar init....................
-	const barPos = useState(new Animated.Value(30))[0];
+	const barPos = useState(new Animated.Value(0))[0];
 	//........................ helper functions ........................
 
 	function sort() {
