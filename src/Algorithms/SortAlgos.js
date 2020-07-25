@@ -4,26 +4,67 @@ const sleep = (milliseconds) => {
 	return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
-async function bubbleSort(swap, A, visit, unvisit, sleepSec) {
+async function bubbleSort(swap, A, visit, unvisit, sleepSec, changeBarPos) {
 	let n = A.length;
+	changeBarPos(30 * 1);
+	await sleep(sleepSec);
 
 	for (var i = 0; i < n - 1; i++) {
+		changeBarPos(30 * 2);
+		await sleep(sleepSec);
+
 		for (var j = 0; j < n - i - 1; j++) {
+			changeBarPos(30 * 3);
 			visit(j);
 			visit(j + 1);
-			await sleep(sleepSec / SLEEP_DIV);
+			await sleep(sleepSec);
+
+			changeBarPos(30 * 4);
+			await sleep(sleepSec);
 
 			if (parseInt(A[j].val._value) > parseInt(A[j + 1].val._value)) {
 				swap(j, j + 1);
+				changeBarPos(30 * 5);
 				await sleep(sleepSec);
 			}
 
+			changeBarPos(30 * 6);
 			unvisit(j);
 			unvisit(j + 1);
-			await sleep(sleepSec / SLEEP_DIV);
+			await sleep(sleepSec);
+
+			changeBarPos(30 * 7);
+			await sleep(sleepSec);
 		}
+		changeBarPos(30 * 8);
+		await sleep(sleepSec);
 	}
+	changeBarPos(30 * 9);
+	await sleep(sleepSec);
 }
+
+// async function bubbleSort(swap, A, visit, unvisit, sleepSec, changeBarPos) {
+// 	let n = A.length;
+// 	changeBarPos(30 * 1);
+// 	for (var i = 0; i < n - 1; i++) {
+// 		for (var j = 0; j < n - i - 1; j++) {
+// 			changeBarPos(30 * 4);
+// 			visit(j);
+// 			visit(j + 1);
+// 			await sleep(sleepSec / SLEEP_DIV);
+
+// 			if (parseInt(A[j].val._value) > parseInt(A[j + 1].val._value)) {
+// 				swap(j, j + 1);
+// 				changeBarPos(30 * 5);
+// 				await sleep(sleepSec);
+// 			}
+// 			changeBarPos(30 * 6);
+// 			unvisit(j);
+// 			unvisit(j + 1);
+// 			await sleep(sleepSec / SLEEP_DIV);
+// 		}
+// 	}
+// }
 
 async function insertionSort(setValue, A, visit, unvisit, sleepSec) {
 	let n = A.length;

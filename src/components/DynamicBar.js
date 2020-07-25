@@ -22,6 +22,7 @@ import AnimatedTabBar from "./AnimatedTabBar";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import CodeContent from "./CodeContent";
 
 var WIDTH = Dimensions.get("window").width;
 var HEIGHT = 100;
@@ -35,6 +36,19 @@ var DEFAULT_BARS = [77, 44, 99, 55, 88, 66, 33];
 
 var BORDER_COLOR_RANGE = ["rgba(227,168,255,0)", "rgba(227,168,255,1)"];
 const BAR_COLOR_RANGE = ["rgba(216,224,255,1)", "rgba(87,117,255,1)"];
+
+const bubbleSortCodeData = [
+	"bubbleSort(A){",
+	"\tlet n = A.length",
+	"\tfor(int i = 0; i<n-1;i++){",
+	"\t\tfor(int j = 0; j < n-1; j++){",
+	"\t\t\tif(A[j] > A[j+1]){",
+	"\t\t\t\tswap(A[j],A[j+1])",
+	"\t\t\t}",
+	"\t\t}",
+	"\t}",
+	"}",
+];
 
 const DynamicBar = ({
 	sortAlgo,
@@ -59,7 +73,7 @@ const DynamicBar = ({
 		}, []);
 	}
 
-	const [SLEEP_SEC, setSleepSec] = useState(350);
+	const [SLEEP_SEC, setSleepSec] = useState(1000);
 
 	//........................ Bar Width Animation ........................
 	const animWidth = useState(
@@ -148,12 +162,21 @@ const DynamicBar = ({
 			useNativeDriver: false,
 		}).start();
 	}
+	//........................ Code Content Bar init....................
+	const barPos = useState(new Animated.Value(30))[0];
 	//........................ helper functions ........................
 
 	function sort() {
 		switch (sortAlgo) {
 			case "Bubble Sort":
-				bubbleSort(animSwap, getAnimVal, visit, unvisit, SLEEP_SEC);
+				bubbleSort(
+					animSwap,
+					getAnimVal,
+					visit,
+					unvisit,
+					SLEEP_SEC,
+					changeBarPos
+				);
 				break;
 			case "Insertion Sort":
 				insertionSort(animSetValue, getAnimVal, visit, unvisit, SLEEP_SEC);
@@ -219,6 +242,15 @@ const DynamicBar = ({
 		}
 	}
 
+	function changeBarPos(toValue) {
+		console.log(toValue);
+		Animated.timing(barPos, {
+			toValue,
+			duration: 100,
+			useNativeDriver: false,
+		}).start();
+	}
+
 	//........................ Dynamic Bar Render ........................
 	return (
 		<View style={styles.frame}>
@@ -273,10 +305,10 @@ const DynamicBar = ({
 						}}
 						action={{
 							fstAction: () => {
-								setSleepSec(350);
+								setSleepSec(1000);
 							},
 							secAction: () => {
-								setSleepSec(275);
+								setSleepSec(500);
 							},
 							trdAction: () => {
 								setSleepSec(200);
@@ -320,6 +352,7 @@ const DynamicBar = ({
 							},
 						}}
 					/>
+					<CodeContent barPos={barPos} data={bubbleSortCodeData} />
 				</View>
 			)}
 		</View>
