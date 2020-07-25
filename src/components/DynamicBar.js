@@ -9,7 +9,6 @@ import {
 	TouchableOpacity,
 	Text,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import {
 	knuthShuffle,
 	bubbleSort,
@@ -168,6 +167,7 @@ const DynamicBar = ({
 	const [showCode, setShowCode] = useState(false);
 	//........................ Code Content Bar init....................
 	const barPos = useState(new Animated.Value(0))[0];
+
 	//........................ helper functions ........................
 
 	function sort() {
@@ -365,7 +365,6 @@ const DynamicBar = ({
 							},
 						}}
 					/>
-
 					{showCplx ? (
 						<View>
 							<Text>show complexity</Text>
@@ -458,6 +457,10 @@ const styles = StyleSheet.create({
 	buttonText: {
 		fontSize: 18,
 		color: "white",
+	},
+	scene: {
+		flex: 1,
+		height: 100,
 	},
 });
 
