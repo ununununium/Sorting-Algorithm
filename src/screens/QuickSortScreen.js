@@ -1,15 +1,29 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import DynamicBar from "../components/DynamicBar";
+import { StyleSheet, ScrollView } from "react-native";
+import SortContent from "../components/SortContent";
 
 const QuickSortScreen = () => {
-	return (
-		<View>
-			<DynamicBar sortAlgo="Quick Sort" />
-		</View>
-	);
+  return (
+    <ScrollView style={styles.background}>
+      <SortContent sortAlgo="quickSort" />
+    </ScrollView>
+  );
 };
 
-const styles = StyleSheet.create({});
+QuickSortScreen.navigationOptions = {
+  title: "Quick Sort",
+  headerStyle: {
+    backgroundColor: "#889BF2",
+  },
+  headerTitleStyle: {
+    color: "white",
+  },
+};
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: "#E2E6FA",
+  },
+});
 
 export default QuickSortScreen;

@@ -1,15 +1,30 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import DynamicBar from "../components/DynamicBar";
+import SortContent from "../components/SortContent";
 
 const CocktailShakerSortScreen = () => {
-	return (
-		<View>
-			<DynamicBar sortAlgo="Bubble Sort" />
-		</View>
-	);
+  return (
+    <View>
+      <SortContent sortAlgo="cocktailShakerSort" />
+    </View>
+  );
 };
 
-const styles = StyleSheet.create({});
+// modify navigation title
+CocktailShakerSortScreen.navigationOptions = {
+  title: "Cocktail Shaker Sort",
+  headerStyle: {
+    backgroundColor: "#889BF2",
+  },
+  headerTitleStyle: {
+    color: "white",
+  },
+};
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: "#E2E6FA",
+  },
+});
 
 export default CocktailShakerSortScreen;

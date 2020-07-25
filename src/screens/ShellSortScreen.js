@@ -1,15 +1,29 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import DynamicBar from "../components/DynamicBar";
+import { StyleSheet, ScrollView } from "react-native";
+import SortContent from "../components/SortContent";
 
 const ShellSortScreen = () => {
-	return (
-		<View>
-			<DynamicBar sortAlgo="Bubble Sort" />
-		</View>
-	);
+  return (
+    <ScrollView style={styles.background}>
+      <SortContent sortAlgo="shellSort" />
+    </ScrollView>
+  );
 };
 
-const styles = StyleSheet.create({});
+ShellSortScreen.navigationOptions = {
+  title: "Shell Sort",
+  headerStyle: {
+    backgroundColor: "#889BF2",
+  },
+  headerTitleStyle: {
+    color: "white",
+  },
+};
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: "#E2E6FA",
+  },
+});
 
 export default ShellSortScreen;

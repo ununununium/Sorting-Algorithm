@@ -1,15 +1,29 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import DynamicBar from "../components/DynamicBar";
+import { StyleSheet, ScrollView } from "react-native";
+import SortContent from "../components/SortContent";
 
 const SlowSortScreen = () => {
-	return (
-		<View>
-			<DynamicBar sortAlgo="Bubble Sort" />
-		</View>
-	);
+  return (
+    <ScrollView style={styles.background}>
+      <SortContent sortAlgo="slowSort" />
+    </ScrollView>
+  );
 };
 
-const styles = StyleSheet.create({});
+SlowSortScreen.navigationOptions = {
+  title: "Slow Sort",
+  headerStyle: {
+    backgroundColor: "#889BF2",
+  },
+  headerTitleStyle: {
+    color: "white",
+  },
+};
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: "#E2E6FA",
+  },
+});
 
 export default SlowSortScreen;

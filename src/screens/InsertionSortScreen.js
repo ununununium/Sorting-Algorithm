@@ -1,32 +1,29 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import DynamicBar from "../components/DynamicBar";
-import SortTitle from "../components/SortTitle";
+import React from "react";
+import { StyleSheet, ScrollView } from "react-native";
 import SortContent from "../components/SortContent";
 
-const InsertionSortScreen = ({ navigation }) => {
-	const complexity = {
-		worst: "O(n^2)",
-		average: "O(n^2)",
-		best: "O(n)",
-		stable: "Yes",
-	};
+const InsertionSortScreen = () => {
+  return (
+    <ScrollView style={styles.background}>
+      <SortContent sortAlgo="insertionSort" />
+    </ScrollView>
+  );
+};
 
-	const desc =
-		"Insertion sort is a simple algorithm that repeatedly chooses value from the list and inserts it into the already partialy sorted array.";
-	return (
-		<ScrollView style={styles.screen}>
-			<SortTitle title="Insertion sort" />
-			<DynamicBar sortAlgo="Insertion Sort" />
-			<SortContent complexity={complexity} Description={desc} />
-		</ScrollView>
-	);
+InsertionSortScreen.navigationOptions = {
+  title: "Insertion Sort",
+  headerStyle: {
+    backgroundColor: "#889BF2",
+  },
+  headerTitleStyle: {
+    color: "white",
+  },
 };
 
 const styles = StyleSheet.create({
-	screen: {
-		backgroundColor: "#ffffff",
-	},
+  background: {
+    backgroundColor: "#E2E6FA",
+  },
 });
 
 export default InsertionSortScreen;
