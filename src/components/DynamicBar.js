@@ -392,6 +392,7 @@ const DynamicBar = ({
 	const [showCode, setShowCode] = useState(false);
 	//........................ Code Content Bar init....................
 	const barPos = useState(new Animated.Value(0))[0];
+
 	//........................ helper functions ........................
 
 	function sort() {
@@ -589,7 +590,6 @@ const DynamicBar = ({
 							},
 						}}
 					/>
-
 					{showCplx ? (
 						<View>
 							<Text>show complexity</Text>
@@ -619,6 +619,7 @@ const DynamicBar = ({
 };
 
 const styles = StyleSheet.create({
+<<<<<<< HEAD
   frame: {},
   barCollection: {
     height: HEIGHT + 10,
@@ -638,6 +639,77 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginRight: BAR_MARGIN,
   },
+=======
+	frame: {
+		// borderWidth: 1,
+		// borderColor: "black",
+		// alignItems: "center",
+		// justifyContent: "center",
+	},
+	barCollection: {
+		// borderWidth: 1,
+		// borderColor: "black",
+		// width: WIDTH - 40 - BAR_MARGIN,
+
+		height: HEIGHT + 10,
+		flexDirection: "row",
+		justifyContent: "space-around",
+		alignItems: "flex-end",
+	},
+	bar: {
+		height: 300,
+		width: 40,
+		borderRadius: 50,
+		borderColor: "white",
+		borderWidth: BORDER_WIDTH,
+		backgroundColor: "black",
+		alignSelf: "flex-end",
+
+		alignItems: "center",
+		justifyContent: "flex-end",
+		marginRight: BAR_MARGIN,
+	},
+	barText: {
+		fontSize: 14,
+		color: "white",
+		fontWeight: "bold",
+	},
+	buttonView: {
+		padding: 20,
+		flexDirection: "row",
+		alignSelf: "center",
+	},
+	background: {
+		backgroundColor: "#E2E6FA",
+	},
+	numBar: {
+		paddingTop: 30,
+		paddingBottom: 30,
+	},
+	buttonBar: {
+		height: 70,
+		backgroundColor: "#6D82E2",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-around",
+	},
+	button: {
+		height: 35,
+		width: WIDTH / 5,
+		backgroundColor: "#5C69A4",
+		borderRadius: 21,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	buttonText: {
+		fontSize: 18,
+		color: "white",
+	},
+	scene: {
+		flex: 1,
+		height: 100,
+	},
+>>>>>>> 05d4f7cc8842b78d05b9b956ca3a641f8b618368
 });
 
 export default DynamicBar;
