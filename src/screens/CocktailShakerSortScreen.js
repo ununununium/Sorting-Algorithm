@@ -1,16 +1,15 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import SortContent from "../components/SortContent";
 
 const CocktailShakerSortScreen = () => {
   return (
-    <View>
-      <SortContent sortAlgo="cocktailShakerSort" />
-    </View>
+    <ScrollView style={styles.background}>
+      <SortContent sortAlgo="bublleSort" scene="SortContent" />
+    </ScrollView>
   );
 };
 
-// modify navigation title
 CocktailShakerSortScreen.navigationOptions = {
   title: "Cocktail Shaker Sort",
   headerStyle: {
