@@ -18,6 +18,7 @@ async function bubbleSort(
       bubbleSortHome(swap, A, visit, unvisit, sleepSec);
       break;
     case "SortContent":
+      // bubbleSortHome(swap, A, visit, unvisit, sleepSec);
       bubbleSortContent(swap, A, visit, unvisit, sleepSec, changeBarPos);
       break;
   }
@@ -90,7 +91,65 @@ async function bubbleSortContent(
   await sleep(sleepSec);
 }
 
-async function insertionSort(setValue, A, visit, unvisit, sleepSec) {
+// async function insertionSort(
+//   setValue,
+//   A,
+//   visit,
+//   unvisit,
+//   sleepSec,
+//   changeBarPos,
+//   scene
+// ) {
+//   let n = A.length;
+//   for (var i = 1; i < n; ++i) {
+//     visit(i);
+//     await sleep(sleepSec / SLEEP_DIV);
+
+//     let key = A[i].val._value;
+//     var j = i - 1;
+
+//     while (j >= 0 && A[j].val._value > key) {
+//       visit(j + 1);
+//       visit(j);
+//       await sleep(sleepSec / SLEEP_DIV);
+
+//       setValue(j + 1, A[j].val._value);
+//       await sleep(sleepSec);
+
+//       unvisit(j + 1);
+//       unvisit(j);
+//       await sleep(sleepSec / SLEEP_DIV);
+
+//       j = j - 1;
+//     }
+//     setValue(j + 1, key);
+//     await sleep(sleepSec);
+
+//     unvisit(i);
+//     await sleep(sleepSec / SLEEP_DIV);
+//   }
+// }
+
+async function insertionSort(
+  setValue,
+  A,
+  visit,
+  unvisit,
+  sleepSec,
+  changeBarPos,
+  scene
+) {
+  switch (scene) {
+    case "DynamicHome":
+      insertionSortHome(setValue, A, visit, unvisit, sleepSec);
+      break;
+    case "SortContent":
+      // insertionSortHome(setValue, A, visit, unvisit, sleepSec);
+      insertionSortContent(setValue, A, visit, unvisit, sleepSec, changeBarPos);
+      break;
+  }
+}
+async function insertionSortHome(setValue, A, visit, unvisit, sleepSec) {
   let n = A.length;
   for (var i = 1; i < n; ++i) {
     visit(i);
@@ -119,6 +178,61 @@ async function insertionSort(setValue, A, visit, unvisit, sleepSec) {
     unvisit(i);
     await sleep(sleepSec / SLEEP_DIV);
   }
+}
+
+async function insertionSortContent(
+  setValue,
+  A,
+  visit,
+  unvisit,
+  sleepSec,
+  changeBarPos
+) {
+  let n = A.length;
+  changeBarPos(30 * 1);
+  await sleep(sleepSec);
+
+  for (var i = 1; i < n; ++i) {
+    changeBarPos(30 * 2);
+
+    visit(i);
+    await sleep(sleepSec);
+
+    let key = A[i].val._value;
+    changeBarPos(30 * 3);
+    await sleep(sleepSec);
+    var j = i - 1;
+    changeBarPos(30 * 4);
+    await sleep(sleepSec);
+
+    while (j >= 0 && A[j].val._value > key) {
+      visit(j + 1);
+      visit(j);
+      changeBarPos(30 * 5);
+      await sleep(sleepSec);
+
+      setValue(j + 1, A[j].val._value);
+      changeBarPos(30 * 6);
+      await sleep(sleepSec);
+
+      unvisit(j + 1);
+      unvisit(j);
+      await sleep(sleepSec);
+
+      j = j - 1;
+
+      changeBarPos(30 * 7);
+      await sleep(sleepSec);
+    }
+    setValue(j + 1, key);
+    changeBarPos(30 * 8);
+    await sleep(sleepSec);
+
+    unvisit(i);
+    await sleep(sleepSec);
+  }
+  changeBarPos(30 * 9);
+  await sleep(sleepSec);
 }
 
 async function quickSort(A, low, high, swap, visit, unvisit, sleepSec) {
@@ -260,16 +374,24 @@ async function selectionSort(array, swap, visit, unvisit, sleepSec) {
       visit(i);
       visit(j);
       await sleep(sleepSec);
+
+      unvisit(i);
+      unvisit(j);
+      await sleep(sleepSec);
       if (array[j] < array[min]) {
+        visit(j);
+        visit(min);
+        await sleep(sleepSec);
         min = j;
       }
+
+      unvisit(j);
+      unvisit(min);
+      await sleep(sleepSec);
     }
     if (i !== min) {
       swap(i, min);
     }
-    unvisit(i);
-    unvisit(j);
-    await sleep(sleepSec);
   }
   return array;
 }

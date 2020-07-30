@@ -156,7 +156,15 @@ const SortContent = ({ sortAlgo, scene }) => {
         );
         break;
       case "insertionSort":
-        insertionSort(animSetValue, getAnimVal, visit, unvisit, SLEEP_SEC);
+        insertionSort(
+          animSetValue,
+          getAnimVal,
+          visit,
+          unvisit,
+          SLEEP_SEC,
+          changeBarPos,
+          scene
+        );
         break;
       case "quickSort":
         quickSort(
@@ -386,7 +394,7 @@ const SortContent = ({ sortAlgo, scene }) => {
           <View />
         )}
         {flag[2] ? (
-          <CodeContent barPos={barPos} data={codeData.bublleSort} />
+          <CodeContent barPos={barPos} data={codeData[sortAlgo]} />
         ) : (
           <View />
         )}

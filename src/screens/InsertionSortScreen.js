@@ -5,7 +5,7 @@ import SortContent from "../components/SortContent";
 const InsertionSortScreen = () => {
   return (
     <ScrollView style={styles.background}>
-      <SortContent sortAlgo="insertionSort" />
+      <SortContent sortAlgo="insertionSort" scene="SortContent" />
     </ScrollView>
   );
 };
