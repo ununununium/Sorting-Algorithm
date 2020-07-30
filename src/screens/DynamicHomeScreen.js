@@ -70,13 +70,13 @@ const DynamicHomeScreen = ({ navigation }) => {
       <View style={styles.hbox}>
         <DynamicCell
           passdown={{ setter: setButt5 }}
-          sortAlgo="Bubble Sort"
+          sortAlgo="Selection Sort"
           callBack={() => navigation.navigate("SelectionSort")}
           color="#51B8F2"
         />
         <DynamicCell
           passdown={{ setter: setButt6 }}
-          sortAlgo="Bubble Sort"
+          sortAlgo="Shell Sort"
           callBack={() => navigation.navigate("ShellSort")}
           color="#9B7F69"
         />
@@ -84,13 +84,13 @@ const DynamicHomeScreen = ({ navigation }) => {
       <View style={styles.hbox}>
         <DynamicCell
           passdown={{ setter: setButt7 }}
-          sortAlgo="Bubble Sort"
+          sortAlgo="Slow Sort"
           callBack={() => navigation.navigate("SlowSort")}
           color="#58DC88"
         />
         <DynamicCell
           passdown={{ setter: setButt8 }}
-          sortAlgo="Bubble Sort"
+          sortAlgo="Cocktail Shaker Sort"
           callBack={() => navigation.navigate("CocktailShakerSort")}
           color="#C4234D"
         />

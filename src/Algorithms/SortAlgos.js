@@ -1,5 +1,3 @@
-import { setStatusBarBackgroundColor } from "expo-status-bar";
-
 let SLEEP_DIV = 4;
 
 const sleep = (milliseconds) => {
@@ -255,19 +253,23 @@ async function knuthShuffle(array, swap, visit, unvisit, sleepSec) {
   }
 }
 
-function selectionSort(array) {
+async function selectionSort(array, swap, visit, unvisit, sleepSec) {
   for (var i = 0; i < array.length; i++) {
     var min = i;
     for (var j = i + 1; j < array.length; j++) {
+      visit(i);
+      visit(j);
+      await sleep(sleepSec);
       if (array[j] < array[min]) {
         min = j;
       }
     }
     if (i !== min) {
-      var temp = array[i];
-      array[i] = array[min];
-      array[min] = temp;
+      swap(i, min);
     }
+    unvisit(i);
+    unvisit(j);
+    await sleep(sleepSec);
   }
   return array;
 }
@@ -348,10 +350,45 @@ const codeData = {
     "\t}",
     "}",
   ],
-  insertionSort: [],
-  quickSort: [],
+  insertionSort: [
+    "insertionSort(A){",
+    "\tint n = A.length",
+    "\tfor(var i = 1; i < n; ++i){",
+    "\t\tlet key = A[i];",
+    "\t\tvar j = i - 1;",
+    "\t\twhile (j >= 0 && A[j] > key) {",
+    "\t\t\tA[j + 1] = A[j];",
+    "\t\t\tj = j - 1;",
+    "\t\t\t}",
+    "\t\t\tA[j + 1] = key;",
+    "\t\t}",
+    "}",
+  ],
+  quickSort: [
+    "set first element as pivot",
+    "for each (unsorted) partition",
+    "\tstoreIndex = pivotIndex + 1",
+    "\tfor i = pivotIndex + 1 to rightmostIndex",
+    "\t\tif element[i] < element[pivot]",
+    "\t\t\tswap(i, storeIndex); storeIndex++",
+    "\t\tswap(pivot, storeIndex - 1)",
+  ],
   heapSort: [],
-  selectionSort: [],
+  selectionSort: [
+    "selectionSort(A){",
+    "\tfor (var i = 0; i < A.length; i++) {",
+    "\t\tvar min = i;",
+    "\t\tfor (var j = i + 1; j < A.length; j++) {",
+    "\t\t\tif (A[j] < A[min]) {",
+    "\t\t\t\tmin = j;",
+    "\t\t\t }",
+    "\t\t}",
+    "\t\t\tif (i !== min) {",
+    "\t\t\t\tswap(i, min);;",
+    "\t\t\t }",
+    "\t}",
+    "}",
+  ],
   shellSort: [],
   slowSort: [],
   cocktailShakerSort: [],
@@ -447,4 +484,8 @@ export {
   knuthShuffle,
   codeData,
   sortInfo,
+  selectionSort,
+  shellSort,
+  slowSort,
+  cocktailShakerSort,
 };
